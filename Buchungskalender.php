@@ -9,3 +9,5 @@ Author: Dustin Baum
 Author URI: http://github.com/Debaum
 License: GPL2
 */
+
+include 'admin/menu.php';

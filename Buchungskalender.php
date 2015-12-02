@@ -2,10 +2,10 @@
 
 /*
 Plugin Name: Buchungskalender
-Plugin URI: http://URI_Of_Page_Describing_Plugin_and_Updates
-Description: A brief description of the Plugin.
-Version: 1.0
-Author: dusti
-Author URI: http://URI_Of_The_Plugin_Author
-License: A "Slug" license name e.g. GPL2
+Plugin URI: http://github.com/DeBaum/Buchungskalender
+Description: INA2 Buchungskalender für die Stadtverwaltung Bocholt
+Version: 0.1
+Author: Dustin Baum
+Author URI: http://github.com/Debaum
+License: GPL2
 */

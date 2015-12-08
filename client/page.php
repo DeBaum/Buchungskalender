@@ -1,86 +1,97 @@
 <?php
 
-register_activation_hook(WP_PLUGIN_DIR . '/Buchungskalender/Buchungskalender.php', 'buchungskalender_install');
-register_deactivation_hook(WP_PLUGIN_DIR . '/Buchungskalender/Buchungskalender.php', 'buchungskalender_remove');
+register_activation_hook(WP_PLUGIN_DIR . '/Buchungskalender/Buchungskalender.php', 'bk_install');
+register_deactivation_hook(WP_PLUGIN_DIR . '/Buchungskalender/Buchungskalender.php', 'bk_remove');
 
-add_action('delete_post', 'buchungskalender_preventSiteDelete');
-add_action('trashed_post', 'buchungskalender_preventSiteTrash');
+add_action('delete_post', 'bk_preventSiteDelete');
+add_action('save_post', 'bk_preventSiteModification');
+add_action('trashed_post', 'bk_preventSiteTrash');
 
-function buchungskalender_install() {
+function bk_install() {
 	$page_title = 'Buchungskalender';
 	$page_slug = 'buchungskalender';
 
 	$page = get_page_by_path($page_slug);
 
-	delete_option('buchungskalender_PageTitle');
-	add_option('buchungskalender_PageTitle', $page_title, '', 'no');
+	delete_option('bk_PageTitle');
+	add_option('bk_PageTitle', $page_title, '', 'no');
 
-	delete_option('buchungskalender_PageSlug');
-	add_option('buchungskalender_PageSlug', $page_slug, '', 'no');
+	delete_option('bk_PageSlug');
+	add_option('bk_PageSlug', $page_slug, '', 'no');
 
 	if (!$page) {
-		buchungskalender_recreatePage();
+		bk_recreatePage();
 	} else {
-		buchungskalender_untrashPage();
+		bk_untrashPage();
 	}
 }
 
-function buchungskalender_remove() {
-	$page_id = get_option('buchungskalender_page_id');
+function bk_remove() {
+	$page_id = get_option('bk_page_id');
 
-	delete_option('buchungskalender_PageTitle');
-	delete_option('buchungskalender_PageSlug');
-	delete_option('buchungskalender_page_id');
+	delete_option('bk_PageTitle');
+	delete_option('bk_PageSlug');
+	delete_option('bk_page_id');
 
 	if ($page_id) {
 		wp_delete_post($page_id);
 	}
 }
 
-function buchungskalender_preventSiteDelete($postId) {
-	if ($postId == get_option('buchungskalender_page_id')) {
-		buchungskalender_recreatePage();
+function bk_preventSiteDelete($postId) {
+	if ($postId == get_option('bk_page_id')) {
+		bk_recreatePage();
 	}
 }
 
-function buchungskalender_preventSiteTrash($postId) {
-	if ($postId == get_option('buchungskalender_page_id')) {
-		buchungskalender_untrashPage();
+function bk_preventSiteTrash($postId) {
+	if ($postId == get_option('bk_page_id')) {
+		bk_untrashPage();
 	}
 }
 
-function buchungskalender_recreatePage() {
-	$page_title = get_option('buchungskalender_PageTitle');
-	$page_slug = get_option('buchungskalender_PageSlug');
+function bk_preventSiteModification($postId) {
+	if ($postId == get_option('bk_page_id')) {
+		bk_untrashPage();
+	}
+}
+
+function bk_recreatePage() {
+	$page_title = get_option('bk_PageTitle');
+	$page_slug = get_option('bk_PageSlug');
 
 	if ($page_slug) {
 		$_p = array();
 		$_p['post_name'] = $page_slug;
 		$_p['post_title'] = $page_title;
-		$_p['post_content'] = '';
+		$_p['post_content'] = '[Buchungskalender]';
 		$_p['post_status'] = 'publish';
 		$_p['post_type'] = 'page';
 		$_p['comment_status'] = 'closed';
 		$_p['ping_status'] = 'closed';
 		$_p['post_category'] = array(1);
 
-		save_buchungskalender_page_id(wp_insert_post($_p));
+		bk_save_post_id(wp_insert_post($_p));
 	}
 }
 
-function buchungskalender_untrashPage() {
-	$page_slug = get_option('buchungskalender_PageSlug');
+function bk_untrashPage() {
+	$page_slug = get_option('bk_PageSlug');
 
 	if ($page_slug) {
-
 		$page = get_page_by_path($page_slug);
 
 		$page->post_status = 'publish';
-		save_buchungskalender_page_id(wp_update_post($page));
+		$page->post_content = '[Buchungskalender]';
+
+		remove_action('save_post', 'bk_preventSiteModification');
+		bk_save_post_id(wp_update_post($page));
+		add_action('save_post', 'bk_preventSiteModification');
 	}
 }
 
-function save_buchungskalender_page_id($id) {
-	delete_option('buchungskalender_page_id');
-	add_option('buchungskalender_page_id', $id, '', 'no');
+
+function bk_save_post_id($id) {
+	delete_option('bk_page_id');
+	add_option('bk_page_id', $id, '', 'no');
 }

@@ -12,3 +12,4 @@ License: GPL2
 
 include 'admin/menu.php';
 include 'client/page.php';
+include 'client/shortcode.php';

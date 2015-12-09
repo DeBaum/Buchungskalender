@@ -42,7 +42,8 @@ function src($rel_path) {
 			<thead>
 			<tr>
 				<td class="manage-column column-cb check-column">
-					<input type="checkbox" ng-model="cat.allSelected" title="Alle auswählen">
+					<input type="checkbox" ng-model="cat.allSelected" ng-change="cat.selectAll(cat.allSelected)"
+					       title="Alle auswählen">
 				</td>
 				<th class="manage-column column-columnname manage-column column-primary sortable"
 				    ng-class="cat.getSortingClass('title')">
@@ -87,9 +88,23 @@ function src($rel_path) {
 					<input type="checkbox" ng-model="c.selected" title="{{c.title}} auswählen">
 				</th>
 				<td>
-					<span>{{c.title}}</span>
+					<span ng-hide="c.showTitleEdit">{{c.title}}</span>
 
-					<div class="row-actions">
+					<span ng-show="c.showTitleEdit">
+						<input type="text" ng-model="c.modifiedTitle">
+						<a href="" ng-click="cat.setTitle(c, c.modifiedTitle)">
+							<span class="dashicons dashicons-yes"></span>
+						</a>
+						<a href="" ng-click="c.modifiedTitle = c.title; c.showTitleEdit = false">
+							<span class="dashicons dashicons-no"></span>
+						</a>
+					</span>
+
+					<div class="row-actions" ng-hide="c.showTitleEdit">
+						<span class="edit">
+							<a href="" ng-click="c.showTitleEdit = true">Bearbeiten</a>
+						</span>
+						|
 						<span class="delete">
 							<a href="" ng-click="cat.delete(c)">Löschen</a>
 						</span>
@@ -109,6 +124,10 @@ function src($rel_path) {
 				</select>
 				<input type="submit" class="button action" value="Übernehmen"
 				       ng-click="cat.bulkAction(cat.selectedBulkAction)">
+			</div>
+
+			<div class="tablenav-pages one-page">
+				<span class="displaying-num">{{cat.categories.length}} {{cat.categories.length == 1 ? 'Eintrag' : 'Einträge'}}</span>
 			</div>
 		</div>
 	</div>

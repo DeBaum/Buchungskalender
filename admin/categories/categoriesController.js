@@ -7,13 +7,14 @@
         var vm = this;
         vm.showNewnameInput = false;
         vm.newCategoryName = '';
-        vm.categories = [{title:'default', selected:false, objects: 0}];
+        vm.categories = [{title:'default', modifiedTitle: 'default', showTitleEdit: false, selected: false, objects: 0}];
         vm.sorting = {col: 'title', asc: true};
         vm.selectedBulkAction = '-1';
         vm.allSelected = false;
 
         vm.getSortingClass = getSortingClass;
         vm.setSorting = setSorting;
+        vm.setTitle = setCategoryTitle;
         vm.add = addCategory;
         vm.delete = removeCategory;
         vm.bulkAction = performBulkAction;
@@ -44,6 +45,8 @@
         function addCategory(name) {
             vm.categories.push({
                 title: name,
+                modifiedTitle: name,
+                showTitleEdit: false,
                 selected: false,
                 objects: 0
             });
@@ -58,7 +61,7 @@
 
         function performBulkAction(type) {
             if (type === 'delete') {
-                vm.categories = _.filter(vm.categories, {selected: false});
+                _.remove(vm.categories, {selected: false});
             }
         }
 
@@ -66,6 +69,15 @@
             _.forEach(vm.categories, function (item) {
                 item.selected = select;
             });
+        }
+
+        function setCategoryTitle(category, newTitle) {
+            category.title = newTitle;
+            category.modifiedTitle = newTitle;
+
+            category.showTitleEdit = false;
+
+            sortList();
         }
     }
 })();

@@ -1,0 +1,11 @@
+[ui-calendar] table {
+    margin-bottom: initial;
+}
+
+html {
+    overflow-x: initial !important;
+}
+
+[ui-calendar] .fc-helper {
+    opacity: .6;
+}

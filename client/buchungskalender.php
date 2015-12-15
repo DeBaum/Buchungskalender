@@ -19,12 +19,12 @@ function src($rel_path) {
 <!--<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.5.0/fullcalendar.print.css">-->
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.5.0/fullcalendar.min.css">
 
-<link rel="stylesheet" href="<?php src('calendar/ui-calendar-reset.css') ?>">
+<link rel="stylesheet" href="<?php src('calendar/ui-calendar-mod.css') ?>">
 
 <div ng-app="bkClient">
 	<h1>Buchungskalender</h1>
 
 	<div ng-controller="CalendarController as cal">
-		<div ui-calendar="cal.config.calendar" class="span8 calendar" ng-model="cal.events"></div>
+		<div ui-calendar="cal.config" ng-model="cal.events"></div>
 	</div>
 </div>

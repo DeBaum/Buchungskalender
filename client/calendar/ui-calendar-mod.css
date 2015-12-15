@@ -9,3 +9,12 @@ html {
 [ui-calendar] .fc-helper {
     opacity: .6;
 }
+
+[ui-calendar] .fc-toolbar .fc-center {
+    vertical-align: bottom;
+}
+
+[ui-calendar] .fc-toolbar h2 {
+    font-size: 28px;
+    line-height: 0.5em;
+}

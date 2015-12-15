@@ -21,7 +21,7 @@
         ];
         vm.config = {
             lang: 'de',
-            height: 600,
+            height: 450,
             editable: true,
             weekNumbers: true,
             header: {

@@ -1,0 +1,5 @@
+<ul ng-controller="CategoryController as cat">
+    <li ng-repeat="c in cat.categories">
+        <a ui-sref="find-date({categoryId: c.id})">{{c.title}}</a>
+    </li>
+</ul>

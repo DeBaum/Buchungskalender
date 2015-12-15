@@ -3,7 +3,15 @@ function src($rel_path) {
 	echo plugins_url() . '/Buchungskalender/client/' . $rel_path;
 }
 
+function npmSrc($module_rel_path) {
+	echo plugins_url() . '/Buchungskalender/node_modules/' . $module_rel_path;
+}
+
 ?>
+
+<script>
+	var bkRootPath = '<?php src('') ?>';
+</script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
@@ -11,20 +19,25 @@ function src($rel_path) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.5.0/fullcalendar.min.js"></script>
 
-<script src="<?php src('git-submodules/ui-calendar/src/calendar.js') ?>"></script>
+<script src="<?php npmSrc('angular-ui-calendar/src/calendar.js') ?>"></script>
+<script src="<?php npmSrc('angular-ui-router/release/angular-ui-router.min.js') ?>"></script>
 
 <script src="<?php src('app.js') ?>"></script>
-<script src="<?php src('calendar/calendarController.js') ?>"></script>
+<script src="<?php src('routes.js') ?>"></script>
 
-<!--<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.5.0/fullcalendar.print.css">-->
+<script src="<?php src('category-selection/categoryController.js') ?>"></script>
+<script src="<?php src('find-date/findDateController.js') ?>"></script>
+<script src="<?php src('find-date/calendar/calendarController.js') ?>"></script>
+
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.5.0/fullcalendar.min.css">
 
-<link rel="stylesheet" href="<?php src('calendar/ui-calendar-mod.css') ?>">
+<link rel="stylesheet" href="<?php src('find-date/calendar/ui-calendar-mod.css') ?>">
+<link rel="stylesheet" href="<?php src('find-date/find-date.css') ?>">
 
 <div ng-app="bkClient">
 	<h1>Buchungskalender</h1>
 
-	<div ng-controller="CalendarController as cal">
-		<div ui-calendar="cal.config" ng-model="cal.events"></div>
-	</div>
+	<ui-view>
+		<h2>Loading</h2>
+	</ui-view>
 </div>

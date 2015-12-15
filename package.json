@@ -1,0 +1,17 @@
+{
+  "name": "buchungskalender",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DeBaum/Buchungskalender.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DeBaum/Buchungskalender/issues"
+  },
+  "homepage": "https://github.com/DeBaum/Buchungskalender#readme",
+  "dependencies": {
+    "angular-ui-calendar": "^1.0.2",
+    "angular-ui-router": "^0.2.15"
+  }
+}

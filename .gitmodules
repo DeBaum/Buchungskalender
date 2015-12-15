@@ -1,0 +1,3 @@
+[submodule "client/git-submodules/ui-calendar"]
+	path = client/git-submodules/ui-calendar
+	url = git@github.com:angular-ui/ui-calendar.git

@@ -6,5 +6,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="angular" level="application" />
     <orderEntry type="library" name="lodash" level="application" />
+    <orderEntry type="library" name="fullcalendar" level="application" />
+    <orderEntry type="library" name="moment-with-locales" level="application" />
   </component>
 </module>

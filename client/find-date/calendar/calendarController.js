@@ -13,7 +13,12 @@
             {title: 'Long Event', start: new Date(y, m, d - 5), end: new Date(y, m, d - 2)},
             {id: 999, title: 'Repeating Event', start: new Date(y, m, d - 3, 16, 0), allDay: false},
             {id: 999, title: 'Repeating Event', start: new Date(y, m, d + 4, 16, 0), allDay: false},
-            {title: 'Birthday Party', start: new Date(y, m, d + 1, 19, 0), end: new Date(y, m, d + 1, 22, 30), allDay: false}
+            {
+                title: 'Birthday Party',
+                start: new Date(y, m, d + 1, 19, 0),
+                end: new Date(y, m, d + 1, 22, 30),
+                allDay: false
+            }
         ];
 
         var vm = this;
@@ -33,7 +38,9 @@
             },
             buttonText: {
                 today: 'Heute',
-                month: 'Zurück'
+                month: 'Zurück',
+                agendaWeek: 'Woche',
+                agendaDay: 'Tag'
             },
             allDayText: '',
             slotLabelFormat: 'H:mm',
@@ -45,34 +52,54 @@
             selectable: true,
             dayClick: dayClicked,
             select: onSelect,
-            viewDestroy: onViewChange
+            viewRender: onViewChange
 
         };
 
         ////////////
 
         function dayClicked(date) {
+            date.startOf('day').add(8, 'h');
             bookingDataFactory.start = date.clone();
-            bookingDataFactory.end = date.clone().add(1, 'day');
+            bookingDataFactory.end = date.clone().add(2, 'h');
 
-            vm.config.defaultDate = date;
-            vm.config.defaultView = 'agendaDay';
-            vm.config.header.left = 'month';
+            _.merge(vm.config, {
+                defaultDate: date,
+                defaultView: 'agendaWeek',
+                header: {
+                    left: 'month agendaWeek agendaDay'
+                },
+                buttonText: {
+                    month: 'Zurück'
+                }
+            });
         }
 
         function onSelect(start, end) {
-            bookingDataFactory.start = start;
-            bookingDataFactory.end = end;
-        }
-
-        function onViewChange(view) {
-            if (view.name === 'agendaDay') {
-                vm.config.defaultView = 'month';
-                vm.config.header.left = '';
+            if (end.diff(start, 'h') < 24) {
+                bookingDataFactory.start = start;
+                bookingDataFactory.end = end;
             }
         }
 
-        function filterEvents() {
+        function onViewChange(view) {
+            if ('month'.indexOf(view.name) >= 0) {
+                _.merge(vm.config, {
+                    defaultView: 'month',
+                    buttonText: {
+                        month: 'Monat'
+                    },
+                    header: {
+                        left: ''
+                    }
+                });
+            }
+        }
+
+        function filterEvents(state) {
+            if (typeof state === 'boolean') {
+                vm.showEvents = state;
+            }
             if (vm.showEvents) {
                 for (var i = 0; i < allEvents.length; i++) {
                     vm.events[0].push(allEvents[i]);

@@ -28,7 +28,7 @@
         }
 
         function dateToString(date) {
-            return (date || "").toString();
+            return date ? date.format('D. MMM, H:mm') : '';
         }
     }
 })();

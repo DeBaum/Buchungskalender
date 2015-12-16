@@ -9,11 +9,11 @@
 
     <label>
         Von
-        <input type="text" disabled value="{{filter.dateStr(filter.bookingData.start)}}">
+        <input type="text" disabled value="{{filter.bookingData.start.format('D. MMM, H:mm')}}">
     </label>
     <br>
     <label>
         Bis
-        <input type="text" value="{{filter.dateStr(filter.bookingData.end)}}">
+        <input type="text" disabled value="{{filter.bookingData.end.format('D. MMM, H:mm')}}">
     </label>
 </div>

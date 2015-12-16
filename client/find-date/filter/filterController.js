@@ -12,7 +12,6 @@
         vm.matchedObjects = [{id: 1, title: 'Ford'}, {id: 2, title: 'Opel'}];
         vm.getCategoryName = _.constant(_.result(_.find(vm.categories, {id: vm.categoryId}), 'title'));
         vm.getBookingParams = getBookingParams;
-        vm.dateStr = dateToString;
 
         ////////////
 
@@ -21,14 +20,10 @@
                 return {
                     categoryId: bookingDataFactory.categoryId,
                     objectId: object.id,
-                    start: bookingDataFactory.start.time(),
-                    end: bookingDataFactory.end.time()
+                    start: bookingDataFactory.start.format(),
+                    end: bookingDataFactory.end.format()
                 };
             } else return null;
-        }
-
-        function dateToString(date) {
-            return date ? date.format('D. MMM, H:mm') : '';
         }
     }
 })();

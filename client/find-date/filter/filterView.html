@@ -6,4 +6,14 @@
             <a ui-sref="book-object(filter.getBookingParams(obj))">{{obj.title}}</a>
         </li>
     </ul>
+
+    <label>
+        Von
+        <input type="text" disabled value="{{filter.dateStr(filter.bookingData.start)}}">
+    </label>
+    <br>
+    <label>
+        Bis
+        <input type="text" value="{{filter.dateStr(filter.bookingData.end)}}">
+    </label>
 </div>

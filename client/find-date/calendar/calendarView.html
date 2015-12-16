@@ -1,3 +1,8 @@
 <div ng-controller="CalendarController as cal">
+    <label>
+        Buchungen anzeigen
+        <input type="checkbox" ng-model="cal.showEvents" ng-change="cal.filterEvents()">
+    </label>
+
     <div ui-calendar="cal.config" ng-model="cal.events"></div>
 </div>

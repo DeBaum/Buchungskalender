@@ -27,6 +27,7 @@ function npmSrc($module_rel_path) {
 <script src="<?php src('routes.js') ?>"></script>
 
 <script src="<?php src('category-selection/categoryController.js') ?>"></script>
+<script src="<?php src('find-date/bookingDataFactory.js') ?>"></script>
 <script src="<?php src('find-date/findDateController.js') ?>"></script>
 <script src="<?php src('find-date/calendar/calendarController.js') ?>"></script>
 <script src="<?php src('find-date/filter/filterController.js') ?>"></script>

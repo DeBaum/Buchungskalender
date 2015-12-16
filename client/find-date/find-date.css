@@ -8,3 +8,7 @@
     width: 30%;
     padding-left: 28px;
 }
+
+[ng-app="bkClient"] [ui-calendar] {
+    min-height: 480px;
+}

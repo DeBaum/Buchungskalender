@@ -13,10 +13,11 @@ function npmSrc($module_rel_path) {
 	var bkRootPath = '<?php src('') ?>';
 </script>
 
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.min.js"></script>
+<script>$ = $ || jQuery</script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.5.0/fullcalendar.min.js"></script>
 
 <script src="<?php npmSrc('angular-ui-calendar/src/calendar.js') ?>"></script>
@@ -28,6 +29,7 @@ function npmSrc($module_rel_path) {
 <script src="<?php src('category-selection/categoryController.js') ?>"></script>
 <script src="<?php src('find-date/findDateController.js') ?>"></script>
 <script src="<?php src('find-date/calendar/calendarController.js') ?>"></script>
+<script src="<?php src('find-date/filter/filterController.js') ?>"></script>
 
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.5.0/fullcalendar.min.css">
 

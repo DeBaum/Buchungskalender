@@ -1,1 +1,9 @@
-<h2>Filter</h2>
+<div ng-controller="FilterController as filter">
+    <h2>{{filter.getCategoryName()}}</h2>
+
+    <ul>
+        <li ng-repeat="obj in filter.matchedObjects">
+            <a ui-sref="book-object(filter.getBookingParams(obj))">{{obj.title}}</a>
+        </li>
+    </ul>
+</div>

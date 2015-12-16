@@ -12,13 +12,13 @@
         });
 
         $stateProvider.state('find-date', {
-            url: '/category/:categoryId/date',
+            url: '/category/{categoryId:int}/date',
             templateUrl: bkRootPath + 'find-date/findDateView.html'
         });
 
         $stateProvider.state('book-object', {
-            url: '/category/:categoryId/object/:objectId/book',
-            templateUrl: bkRootPath + 'bookObject/bookObjectView.html'
+            url: '/category/{categoryId:int}/object/{objectId:int}/book?start&end',
+            templateUrl: bkRootPath + 'book-object/bookObjectView.html'
         });
     }
 })();

@@ -1,0 +1,17 @@
+[ng-app="bkClient"] table.form-table td {
+    border: none;
+}
+
+[ng-app="bkClient"] table.form-table td > label.active {
+    cursor: pointer;
+}
+
+[ng-app="bkClient"] table.form-table td:first-child {
+    text-align: right;
+}
+
+[ng-app="bkClient"] #timeBefore,
+[ng-app="bkClient"] #timeAfter{
+    width: 50px;
+    display: inline-block;
+}

@@ -31,11 +31,13 @@ function npmSrc($module_rel_path) {
 <script src="<?php src('find-date/findDateController.js') ?>"></script>
 <script src="<?php src('find-date/calendar/calendarController.js') ?>"></script>
 <script src="<?php src('find-date/filter/filterController.js') ?>"></script>
+<script src="<?php src('book-object/bookObjectController.js') ?>"></script>
 
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.5.0/fullcalendar.min.css">
 
 <link rel="stylesheet" href="<?php src('find-date/calendar/ui-calendar-mod.css') ?>">
 <link rel="stylesheet" href="<?php src('find-date/find-date.css') ?>">
+<link rel="stylesheet" href="<?php src('book-object/book-object.css') ?>">
 
 <div ng-app="bkClient">
 	<h1>Buchungskalender</h1>

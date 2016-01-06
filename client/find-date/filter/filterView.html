@@ -6,10 +6,8 @@
             <div class="form-group">
                 <label for="resource" class="col-sm-4 control-label">Resource</label>
                 <div class="col-sm-8">
-                    <select id="resource" class="form-control">
-                        <!-- TODO ng-options -->
-                        <option value="all">-- Alle --</option>
-                        <option ng-repeat="obj in filter.availableObjects" value="{{obj.id}}">{{obj.title}}</option>
+                    <select id="resource" class="form-control" ng-change="filter.onFilterChanged('object', filter.object)"
+                        ng-options="o as o.title for o in filter.availableObjects track by o.id" ng-model="filter.object">
                     </select>
                 </div>
             </div>
@@ -45,5 +43,4 @@
             </ul>
         </div>
     </div>
-</div>
 </div>

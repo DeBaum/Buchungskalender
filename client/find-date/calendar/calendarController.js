@@ -55,7 +55,17 @@
             viewRender: onViewChange
         };
 
+        $rootScope.$on('filterChanged', onFilterChanged);
+
         ////////////
+
+        //noinspection JSUnusedLocalSymbols
+        function onFilterChanged(event, attr, val) {
+            if (attr == 'object') {
+                vm.showEvents = val != null;
+            }
+            filterEvents();
+        }
 
         function dayClicked(date) {
             date.startOf('day').add(8, 'h');

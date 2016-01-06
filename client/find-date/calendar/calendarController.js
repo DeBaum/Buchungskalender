@@ -46,7 +46,7 @@
             slotLabelFormat: 'H:mm',
             views: {
                 agendaWeek: {
-                    columnFormat: 'ddd, D. MMM'
+                    columnFormat: 'ddd D.M'
                 }
             },
             selectable: true,

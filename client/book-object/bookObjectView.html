@@ -6,7 +6,7 @@
                 <label for="fromDate">Von</label>
             </td>
             <td>
-                <input id="fromDate" type="text" disabled ng-value="bookingData.start.format('D. MMM YY, H:mm')">
+                <input id="fromDate" type="text" disabled ng-value="bookingData.start.format('D. MMM YY, H:mm [Uhr]')">
             </td>
             <td></td>
         </tr>
@@ -16,7 +16,8 @@
             </td>
             <td>
                 <input id="timeBefore" type="text" ng-model="bookingData.timeAround.before">
-                (Termin beginnt um {{bookingData.start.clone().add(bookingData.timeAround.before, 'm').format('H:mm')}})
+                (Termin beginnt um {{bookingData.start.clone().add(bookingData.timeAround.before, 'm').format('H:mm')}}
+                Uhr)
             </td>
         </tr>
         <tr>
@@ -24,7 +25,7 @@
                 <label for="endTime">Bis</label>
             </td>
             <td>
-                <input id="endTime" type="text" disabled ng-value="bookingData.end.format('D. MMM YY, H:mm')">
+                <input id="endTime" type="text" disabled ng-value="bookingData.end.format('D. MMM YY, H:mm [Uhr]')">
             </td>
         </tr>
         <tr>
@@ -33,7 +34,8 @@
             </td>
             <td>
                 <input id="timeAfter" type="text" ng-model="bookingData.timeAround.after">
-                (Termin endet um {{bookingData.end.clone().subtract(bookingData.timeAround.after, 'm').format('H:mm')}})
+                (Termin endet um {{bookingData.end.clone().subtract(bookingData.timeAround.after, 'm').format('H:mm')}}
+                Uhr)
             </td>
         </tr>
         <tr>
@@ -51,4 +53,52 @@
         </tr>
         </tbody>
     </table>
+
+    <div ng-controller="ExtrasController as extras">
+        <div class="form-group" ng-repeat="e in extras.getFields()">
+            <div class="col-sm-3">
+                <label for="extra{{e.id}}">{{e.title}}</label>
+            </div>
+
+            <div class="col-sm-9">
+                <input ng-if="e.type == 'check'" type="checkbox" name="{{e.name}}" id="extra{{e.id}}">
+
+                <input ng-if="e.type == 'text'" type="text" name="{{e.name}}" id="extra{{e.id}}" class="form-control">
+
+                <select ng-if="e.type == 'select'" name="{{e.name}}" id="extra{{e.id}}" class="form-control">
+                    <option ng-repeat="val in e.values" value="{{val.id}}" ng-selected="val.default">
+                        {{val.title}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div ng-repeat="e in extras.getForms()">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" ng-model="extras.selectedExtras[e.id]"> {{e.title}}
+                </label>
+            </div>
+            <div ng-if="extras.selectedExtras[e.id]">
+                <div class="form-group" ng-repeat="f in e.subfields">
+                    <div class="col-sm-3">
+                        <label for="extraField{{f.id}}">{{f.title}}</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <input ng-if="f.type == 'check'" type="checkbox" name="{{f.name}}" id="extraField{{f.id}}">
+
+                        <input ng-if="f.type == 'text'" type="text" name="{{f.name}}" id="extraField{{f.id}}"
+                               class="form-control">
+
+                        <select ng-if="f.type == 'select'" name="{{f.name}}" id="extraField{{f.id}}"
+                                class="form-control">
+                            <option ng-repeat="val in f.values" value="{{val.id}}" ng-selected="val.default">
+                                {{val.title}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </form>

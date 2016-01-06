@@ -32,6 +32,7 @@ function npmSrc($module_rel_path) {
 <script src="<?php src('find-date/calendar/calendarController.js') ?>"></script>
 <script src="<?php src('find-date/filter/filterController.js') ?>"></script>
 <script src="<?php src('book-object/bookObjectController.js') ?>"></script>
+<script src="<?php src('book-object/extras/extrasController.js') ?>"></script>
 
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.5.0/fullcalendar.min.css">
 

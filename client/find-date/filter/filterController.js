@@ -10,7 +10,7 @@
 
         vm.categories = [{id: 1, title: 'Autos'}, {id: 2, title: 'Räume'}];
         vm.availableObjects = [{id: 1, title: 'Ford'}, {id: 2, title: 'Opel'}];
-        vm.matchedObjects = []; // TODO: muss aktualisiert werden sich die ausgewählte Zeit ändert
+        vm.matchedObjects = [];
         vm.getCategoryName = _.constant(_.result(_.find(vm.categories, {id: vm.categoryId}), 'title'));
         vm.getBookingParams = getBookingParams;
 

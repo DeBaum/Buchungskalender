@@ -1,0 +1,23 @@
+.object-filter .form-control {
+    width: 100%;
+}
+
+.object-filter .control-label {
+    text-align: left;
+    padding-right: 0;
+    font-weight: normal;
+}
+
+.object-filter .available-resources a {
+    cursor: pointer;
+}
+
+.object-filter .available-resources li {
+    margin-left: 0;
+}
+
+.object-filter div > .form-group:last-child,
+.object-filter div > .alert:last-child,
+.object-filter div > .list-group:last-child {
+    margin-bottom: 0;
+}

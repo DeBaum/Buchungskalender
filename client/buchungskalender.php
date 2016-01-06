@@ -43,6 +43,6 @@ function npmSrc($module_rel_path) {
 	<h1>Buchungskalender</h1>
 
 	<ui-view>
-		<h2>Loading</h2>
+		<h2>Lade ...</h2>
 	</ui-view>
 </div>

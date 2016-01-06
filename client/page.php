@@ -67,7 +67,7 @@ function bk_recreatePage() {
 		$_p['post_content'] = '[Buchungskalender]';
 		$_p['post_status'] = 'publish';
 		$_p['post_type'] = 'page';
-		$_p['page_template'] = 'page-templates/front-page.php';
+		$_p['page_template'] = 'page-templates/front-page-rev-slider-content.php';
 		$_p['comment_status'] = 'closed';
 		$_p['ping_status'] = 'closed';
 		$_p['post_category'] = array(1);
@@ -84,7 +84,7 @@ function bk_untrashPage() {
 
 		$page->post_status = 'publish';
 		$page->post_content = '[Buchungskalender]';
-		$page->page_template = 'page-templates/front-page.php';
+		$page->page_template = 'page-templates/front-page-rev-slider-content.php';
 
 		remove_action('save_post', 'bk_preventSiteModification');
 		bk_save_post_id(wp_update_post($page));

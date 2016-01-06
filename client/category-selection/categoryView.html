@@ -1,5 +1,35 @@
-<ul ng-controller="CategoryController as cat">
-    <li ng-repeat="c in cat.categories">
-        <a ui-sref="find-date({categoryId: c.id})">{{c.title}}</a>
-    </li>
-</ul>
+<style>
+    .category-image {
+        display: table;
+        width: 100%;
+        position: relative;
+        min-height: 320px;
+        background-size: cover;
+        background-position: bottom;
+        cursor: pointer;
+        margin-top: 12px;
+        margin-bottom: 12px;
+    }
+
+    /*TODO: Auslagern*/
+
+    .category-image p {
+        color: white;
+        font-size: 42px;
+    }
+
+</style>
+
+<div ng-controller="CategoryController as cat">
+    <p>Über unser Buchungssystem können verschiedene Resourcen gebucht werden.</p>
+    <div class="row-fluid" ng-repeat="c in cat.categories">
+        <div class="col-xs-12 col-sm-6 col-md-4" ui-sref="find-date({categoryId: c.id})">
+            <div class="category-image"
+                 style=" background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url({{c.thumbnail}}) bottom / cover">
+                <div style="display:table-cell;vertical-align:middle;">
+                    <p style="text-align:center;">{{c.title}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

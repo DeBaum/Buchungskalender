@@ -22,8 +22,12 @@
                 "title": "Bewirtung",
                 "type": "form",
                 "subfields": [
-                    {"type": "text", "title": "Fachbereich", "name": "fb", "validate": "js-function oder RegEx"},
-                    {"type": "text", "title": "Buget", "name": "buget"}
+                    {"type": "text", "title": "Fachbereich", "name": "fb"},
+                    {"type": "text", "title": "Buget", "name": "buget"},
+                    {"type": "text", "title": "Konto", "name": "konto"},
+                    {"type": "text", "title": "Kostenstelle", "name": "kostenstelle"},
+                    {"type": "text", "title": "Speisen/Getränke", "name": "speisen"}, // TODO: Textarea?
+                    {"type": "text", "title": "Personen", "name": "persons"}
                 ]
             },
             {
@@ -31,6 +35,12 @@
                 "title": "Anzeige Infotafel",
                 "type": "check",
                 "name": "infotafel"
+            },
+            {
+                "id": 14,
+                "title": "Externer Internetzugang",
+                "type": "check",
+                "name": "internet"
             },
             {
                 "id": 13,

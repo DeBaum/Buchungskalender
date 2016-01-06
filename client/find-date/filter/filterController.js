@@ -12,7 +12,9 @@
         vm.availableObjects = [{id: 1, title: 'Ford'}, {id: 2, title: 'Opel'}];
         vm.matchedObjects = [];
         vm.getCategoryName = _.constant(_.result(_.find(vm.categories, {id: vm.categoryId}), 'title'));
+        vm.object = null;
         vm.getBookingParams = getBookingParams;
+        vm.onFilterChanged = onFilterChanged;
 
         ////////////
 
@@ -24,6 +26,10 @@
             } else {
                 vm.matchedObjects = vm.availableObjects;
             }
+        }
+
+        function onFilterChanged(attr, val) {
+            $rootScope.$emit('filterChanged', attr, val);
         }
 
         function getBookingParams(object) {

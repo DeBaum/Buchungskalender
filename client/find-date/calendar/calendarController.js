@@ -66,7 +66,7 @@
                 defaultDate: date,
                 defaultView: 'agendaWeek',
                 header: {
-                    left: 'month agendaWeek agendaDay'
+                    left: 'month agendaWeek'
                 },
                 buttonText: {
                     month: 'Zurück'

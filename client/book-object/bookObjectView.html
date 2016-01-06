@@ -10,16 +10,16 @@
             </td>
             <td></td>
         </tr>
-        <tr>
-            <td>
-                <label for="timeBefore">Vorlauf</label>
-            </td>
-            <td>
-                <input id="timeBefore" type="text" ng-model="bookingData.timeAround.before">
-                (Termin beginnt um {{bookingData.start.clone().add(bookingData.timeAround.before, 'm').format('H:mm')}}
-                Uhr)
-            </td>
-        </tr>
+        <!--<tr>-->
+        <!--<td>-->
+        <!--<label for="timeBefore">Vorlauf</label>-->
+        <!--</td>-->
+        <!--<td>-->
+        <!--<input id="timeBefore" type="text" ng-model="bookingData.timeAround.before">-->
+        <!--(Termin beginnt um {{bookingData.start.clone().add(bookingData.timeAround.before, 'm').format('H:mm')}}-->
+        <!--Uhr)-->
+        <!--</td>-->
+        <!--</tr>-->
         <tr>
             <td>
                 <label for="endTime">Bis</label>
@@ -28,16 +28,16 @@
                 <input id="endTime" type="text" disabled ng-value="bookingData.end.format('D. MMM YY, H:mm [Uhr]')">
             </td>
         </tr>
-        <tr>
-            <td>
-                <label for="timeAfter">Nachlauf</label>
-            </td>
-            <td>
-                <input id="timeAfter" type="text" ng-model="bookingData.timeAround.after">
-                (Termin endet um {{bookingData.end.clone().subtract(bookingData.timeAround.after, 'm').format('H:mm')}}
-                Uhr)
-            </td>
-        </tr>
+        <!--<tr>-->
+        <!--<td>-->
+        <!--<label for="timeAfter">Nachlauf</label>-->
+        <!--</td>-->
+        <!--<td>-->
+        <!--<input id="timeAfter" type="text" ng-model="bookingData.timeAround.after">-->
+        <!--(Termin endet um {{bookingData.end.clone().subtract(bookingData.timeAround.after, 'm').format('H:mm')}}-->
+        <!--Uhr)-->
+        <!--</td>-->
+        <!--</tr>-->
         <tr>
             <td>
                 <label for="object" class="active">Objekt</label>

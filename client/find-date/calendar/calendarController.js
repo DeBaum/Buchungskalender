@@ -53,7 +53,6 @@
             dayClick: dayClicked,
             select: onSelect,
             viewRender: onViewChange
-
         };
 
         ////////////
@@ -76,12 +75,16 @@
         }
 
         function onSelect(start, end) {
-            if (end.diff(start, 'h') <= 24) {
+            if (end.diff(start, 'h') % 24 > 0) {
                 bookingDataFactory.start = start;
                 bookingDataFactory.end = end;
             } else {
                 bookingDataFactory.start = start.add(8, 'h');
                 bookingDataFactory.end = end.subtract(6, 'h');
+                bookingDataFactory.start._ambigTime = false;
+                bookingDataFactory.end._ambigTime = false;
+
+                $('[ui-calendar="cal.config"]').fullCalendar('select', bookingDataFactory.start, bookingDataFactory.end);
             }
         }
 

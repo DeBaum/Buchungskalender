@@ -20,14 +20,20 @@ function npmSrc($module_rel_path) {
 	$ = $ || jQuery;
 	$.cookie = $.cookie || _.noop;
 </script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.5.0/fullcalendar.min.js"></script>
 
+<script src="<?php npmSrc('moment/min/moment-with-locales.min.js') ?>"></script>
+<script src="<?php npmSrc('moment-range/dist/moment-range.min.js') ?>"></script>
 <script src="<?php npmSrc('angular-ui-calendar/src/calendar.js') ?>"></script>
 <script src="<?php npmSrc('angular-ui-router/release/angular-ui-router.min.js') ?>"></script>
 
+<script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.5.0/fullcalendar.min.js"></script>
+
 <script src="<?php src('app.js') ?>"></script>
 <script src="<?php src('routes.js') ?>"></script>
+
+<script src="<?php src('categoryService.js') ?>"></script>
+<script src="<?php src('objectService.js') ?>"></script>
+<script src="<?php src('find-date/reservationService.js') ?>"></script>
 
 <script src="<?php src('category-selection/categoryController.js') ?>"></script>
 <script src="<?php src('find-date/bookingDataFactory.js') ?>"></script>

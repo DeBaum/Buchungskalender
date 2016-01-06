@@ -2,28 +2,14 @@
     angular.module('bkClient')
         .controller('CalendarController', CalendarController);
 
-    CalendarController.$inject = ['bookingDataFactory', '$rootScope'];
-    function CalendarController(bookingDataFactory, $rootScope) {
-        var date = new Date();
-        var d = date.getDate();
-        var m = date.getMonth();
-        var y = date.getFullYear();
-        var allEvents = [ // TODO: Demodaten entfernen?
-            {title: 'All Day Event', start: new Date(y, m, 1)},
-            {title: 'Long Event', start: new Date(y, m, d - 5), end: new Date(y, m, d - 2)},
-            {id: 999, title: 'Repeating Event', start: new Date(y, m, d - 3, 16, 0), allDay: false},
-            {id: 999, title: 'Repeating Event', start: new Date(y, m, d + 4, 16, 0), allDay: false},
-            {
-                title: 'Birthday Party',
-                start: new Date(y, m, d + 1, 19, 0),
-                end: new Date(y, m, d + 1, 22, 30),
-                allDay: false
-            }
-        ];
+    CalendarController.$inject = ['bookingDataFactory', '$rootScope', '$state', 'ReservationService'];
+    function CalendarController(bookingDataFactory, $rootScope, $state, ReservationService) {
+        var eventFilter = {
+            object: null
+        };
 
         var vm = this;
         vm.bookingData = bookingDataFactory;
-        vm.showEvents = true; // TODO: ggf. ganz rausnehmen?
         vm.events = [[]];
         vm.filterEvents = filterEvents;
         vm.config = {
@@ -32,7 +18,7 @@
             editable: false,
             weekNumbers: true,
             header: {
-                left: '',
+                left: 'goToCategory',
                 center: 'title',
                 right: 'today prev,next'
             },
@@ -49,6 +35,14 @@
                     columnFormat: 'ddd D.M'
                 }
             },
+            customButtons: {
+                goToCategory: {
+                    text: 'Zurück',
+                    click: function() {
+                        $state.go('choose-category');
+                    }
+                }
+            },
             selectable: true,
             dayClick: dayClicked,
             select: onSelect,
@@ -63,6 +57,7 @@
         function onFilterChanged(event, attr, val) {
             if (attr == 'object') {
                 vm.showEvents = val != null;
+                eventFilter.object = val;
             }
             filterEvents();
         }
@@ -107,24 +102,24 @@
                         month: 'Monat'
                     },
                     header: {
-                        left: ''
+                        left: 'goToCategory'
                     }
                 });
             }
         }
 
-        function filterEvents(state) {
-            if (typeof state === 'boolean') {
-                vm.showEvents = state;
+        function filterEvents() {
+            while (vm.events[0].length) {
+                vm.events[0].pop();
             }
-            if (vm.showEvents) {
-                for (var i = 0; i < allEvents.length; i++) {
-                    vm.events[0].push(allEvents[i]);
-                }
-            } else {
-                while (vm.events[0].length) {
-                    vm.events[0].pop();
-                }
+
+            var aviableObjects = [];
+            if (eventFilter.object != null) {
+                aviableObjects = ReservationService.getForObject(eventFilter.object);
+            }
+
+            for (var i = 0; i < aviableObjects.length; i++) {
+                vm.events[0].push(aviableObjects[i]);
             }
         }
     }

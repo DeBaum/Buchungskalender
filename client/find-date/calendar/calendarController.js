@@ -23,7 +23,7 @@
 
         var vm = this;
         vm.bookingData = bookingDataFactory;
-        vm.showEvents = false;
+        vm.showEvents = true; // TODO: ggf. ganz rausnehmen?
         vm.events = [[]];
         vm.filterEvents = filterEvents;
         vm.config = {

@@ -11,7 +11,49 @@
 }
 
 [ng-app="bkClient"] #timeBefore,
-[ng-app="bkClient"] #timeAfter{
+[ng-app="bkClient"] #timeAfter {
     width: 50px;
     display: inline-block;
 }
+
+/**
+Ab hier Code Duplication (siehe filterView.css)
+TODO: Auslagern
+**/
+.booking-form .control-label {
+    text-align: left;
+    /*padding-top: 0;*/
+    padding-right: 0;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.booking-form .form-control {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.booking-form div > .form-group:last-child,
+.booking-form div > .alert:last-child,
+.booking-form div > .list-group:last-child {
+    margin-bottom: 0;
+}
+
+.booking-form .panel li {
+    margin-left: 0;
+}
+
+.booking-form input.checkbox {
+    margin-top: 4px;
+    margin-right: 4px;
+}
+
+.booking-form .row {
+    min-height: 34px;
+}
+
+.booking-form .form-group-label {
+    text-decoration: underline;
+}
+
+/**  **/

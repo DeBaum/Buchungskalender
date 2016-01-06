@@ -1,104 +1,108 @@
-<form ng-controller="BookObjectController">
-    <table class="form-table">
-        <tbody>
-        <tr>
-            <td>
-                <label for="fromDate">Von</label>
-            </td>
-            <td>
-                <input id="fromDate" type="text" disabled ng-value="bookingData.start.format('D. MMM YY, H:mm [Uhr]')">
-            </td>
-            <td></td>
-        </tr>
-        <!--<tr>-->
-        <!--<td>-->
-        <!--<label for="timeBefore">Vorlauf</label>-->
-        <!--</td>-->
-        <!--<td>-->
-        <!--<input id="timeBefore" type="text" ng-model="bookingData.timeAround.before">-->
-        <!--(Termin beginnt um {{bookingData.start.clone().add(bookingData.timeAround.before, 'm').format('H:mm')}}-->
-        <!--Uhr)-->
-        <!--</td>-->
-        <!--</tr>-->
-        <tr>
-            <td>
-                <label for="endTime">Bis</label>
-            </td>
-            <td>
-                <input id="endTime" type="text" disabled ng-value="bookingData.end.format('D. MMM YY, H:mm [Uhr]')">
-            </td>
-        </tr>
-        <!--<tr>-->
-        <!--<td>-->
-        <!--<label for="timeAfter">Nachlauf</label>-->
-        <!--</td>-->
-        <!--<td>-->
-        <!--<input id="timeAfter" type="text" ng-model="bookingData.timeAround.after">-->
-        <!--(Termin endet um {{bookingData.end.clone().subtract(bookingData.timeAround.after, 'm').format('H:mm')}}-->
-        <!--Uhr)-->
-        <!--</td>-->
-        <!--</tr>-->
-        <tr>
-            <td>
-                <label for="object" class="active">Objekt</label>
-            </td>
-            <td>
-                <select id="object" ng-options="o as o.title for o in objects track by o.id"
-                        ng-model="object"></select>
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-        </tr>
-        </tbody>
-    </table>
+<form ng-controller="BookObjectController" class="row form-horizontal booking-form">
 
-    <div ng-controller="ExtrasController as extras">
-        <div class="form-group" ng-repeat="e in extras.getFields()">
-            <div class="col-sm-3">
-                <label for="extra{{e.id}}">{{e.title}}</label>
-            </div>
-
-            <div class="col-sm-9">
-                <input ng-if="e.type == 'check'" type="checkbox" name="{{e.name}}" id="extra{{e.id}}">
-
-                <input ng-if="e.type == 'text'" type="text" name="{{e.name}}" id="extra{{e.id}}" class="form-control">
-
-                <select ng-if="e.type == 'select'" name="{{e.name}}" id="extra{{e.id}}" class="form-control">
-                    <option ng-repeat="val in e.values" value="{{val.id}}" ng-selected="val.default">
-                        {{val.title}}
-                    </option>
-                </select>
-            </div>
-        </div>
-        <div class="clearfix"></div>
-        <div ng-repeat="e in extras.getForms()">
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" ng-model="extras.selectedExtras[e.id]"> {{e.title}}
-                </label>
-            </div>
-            <div ng-if="extras.selectedExtras[e.id]">
-                <div class="form-group" ng-repeat="f in e.subfields">
-                    <div class="col-sm-3">
-                        <label for="extraField{{f.id}}">{{f.title}}</label>
+    <div class="col-sm-4">
+        <div class="panel panel-default panel-default">
+            <div class="panel-heading">Grundeinstellung</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="resource" class="col-sm-4 control-label">Resource</label>
+                    <div class="col-sm-8">
+                        <select id="resource" class="form-control"
+                                ng-options="o as o.title for o in objects track by o.id"
+                                ng-model="object"></select>
                     </div>
-                    <div class="col-sm-9">
-                        <input ng-if="f.type == 'check'" type="checkbox" name="{{f.name}}" id="extraField{{f.id}}">
-
-                        <input ng-if="f.type == 'text'" type="text" name="{{f.name}}" id="extraField{{f.id}}"
-                               class="form-control">
-
-                        <select ng-if="f.type == 'select'" name="{{f.name}}" id="extraField{{f.id}}"
-                                class="form-control">
-                            <option ng-repeat="val in f.values" value="{{val.id}}" ng-selected="val.default">
-                                {{val.title}}
-                            </option>
-                        </select>
+                </div>
+                <div class="form-group">
+                    <label for="von" class="col-sm-2 control-label">von</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="von" placeholder="Startzeit"
+                               value="{{bookingData.start.format('D. MMM, H:mm [Uhr]')}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="bis" class="col-sm-2 control-label">bis</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="bis" placeholder="Endzeit"
+                               value="{{bookingData.end.format('D. MMM, H:mm [Uhr]')}}">
                     </div>
                 </div>
             </div>
+        </div>
+        <button class="btn btn-primary">Absenden</button>
+        <button class="btn btn-default">Abbrechen</button>
+    </div>
+    <div class="col-sm-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">Zusätzliche Attribute</div>
+            <ul class="list-group" ng-controller="ExtrasController as extras">
+                <li class="list-group-item" ng-repeat="e in extras.getAll() | orderBy: 'title'">
+                    <div ng-switch="e.type">
+                        <!-- Ausklappbares Extra -->
+                        <div ng-switch-when="form">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <label class="control-label"
+                                           ng-class="{'form-group-label': extras.selectedExtras[e.id]}"
+                                           for="extra{{e.id}}">{{e.title}}</label>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input class="checkbox" type="checkbox" name="{{e.name}}" id="extra{{e.id}}"
+                                           ng-model="extras.selectedExtras[e.id]">
+                                </div>
+                            </div>
+                            <div class="row form-group" ng-if="extras.selectedExtras[e.id]"
+                                 ng-repeat="field in e.subfields">
+                                <!-- Extra Field -->
+                                <div class="col-sm-3">
+                                    <label for="extra{{e.id}}.field{{field.id}}"
+                                           class="control-label">{{field.title}}</label>
+                                </div>
+                                <div class="col-sm-9" ng-switch="field.type">
+                                    <input ng-switch-when="check" class="checkbox" type="checkbox"
+                                           name="{{field.name}}"
+                                           id="extra{{e.id}}.field{{field.id}}">
+
+                                    <input ng-switch-when="text" type="text" name="{{field.name}}"
+                                           id="extra{{e.id}}.field{{field.id}}"
+                                           class="form-control">
+
+                                    <select ng-switch-when="select" name="{{field.name}}"
+                                            id="extra{{e.id}}.field{{field.id}}"
+                                            class="form-control">
+                                        <option ng-repeat="val in field.values" value="{{val.id}}"
+                                                ng-selected="val.default">
+                                            {{val.title}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <!-- Extra Field -->
+                            </div>
+                        </div>
+
+                        <!--Reguläre Felder-->
+                        <div ng-switch-default class="row">
+                            <div class="col-sm-3">
+                                <label for="extra{{e.id}}" class="control-label">{{e.title}}</label>
+                            </div>
+                            <div class="col-sm-9" ng-switch="e.type">
+                                <!-- Extra Field -->
+                                <input ng-switch-when="check" class="checkbox" type="checkbox" name="{{e.name}}"
+                                       id="extra{{e.id}}">
+
+                                <input ng-switch-when="text" type="text" name="{{e.name}}" id="extra{{e.id}}"
+                                       class="form-control">
+
+                                <select ng-switch-when="select" name="{{e.name}}" id="extra{{e.id}}"
+                                        class="form-control">
+                                    <option ng-repeat="val in e.values" value="{{val.id}}" ng-selected="val.default">
+                                        {{val.title}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
 </form>

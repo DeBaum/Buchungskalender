@@ -22,8 +22,14 @@
         ////////////
 
         function setEventTimeStr() {
-            $scope.event.beforeStr = $scope.time.start.clone().add($scope.event.before, 'm').format('H:mm');
-            $scope.event.afterStr = $scope.time.end.clone().subtract($scope.event.after, 'm').format('H:mm');
+            if ($scope.event) {
+                if ($scope.time.start) {
+                    $scope.event.beforeStr = $scope.time.start.clone().add($scope.event.before, 'm').format('H:mm');
+                }
+                if ($scope.time.end) {
+                    $scope.event.afterStr = $scope.time.end.clone().subtract($scope.event.after, 'm').format('H:mm');
+                }
+            }
         }
     }
 })();

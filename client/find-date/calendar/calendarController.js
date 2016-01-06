@@ -2,8 +2,8 @@
     angular.module('bkClient')
         .controller('CalendarController', CalendarController);
 
-    CalendarController.$inject = ['bookingDataFactory'];
-    function CalendarController(bookingDataFactory) {
+    CalendarController.$inject = ['bookingDataFactory', '$rootScope'];
+    function CalendarController(bookingDataFactory, $rootScope) {
         var date = new Date();
         var d = date.getDate();
         var m = date.getMonth();
@@ -78,6 +78,7 @@
             if (end.diff(start, 'h') % 24 > 0) {
                 bookingDataFactory.start = start;
                 bookingDataFactory.end = end;
+                $rootScope.$emit('dateSelected');
             } else {
                 bookingDataFactory.start = start.add(8, 'h');
                 bookingDataFactory.end = end.subtract(6, 'h');

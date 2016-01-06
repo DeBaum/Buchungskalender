@@ -2,8 +2,8 @@
     angular.module('bkClient')
         .controller('FilterController', FilterController);
 
-    FilterController.$inject = ['bookingDataFactory'];
-    function FilterController(bookingDataFactory) {
+    FilterController.$inject = ['bookingDataFactory', '$rootScope'];
+    function FilterController(bookingDataFactory, $rootScope) {
         var vm = this;
 
         vm.bookingData = bookingDataFactory;
@@ -15,6 +15,16 @@
         vm.getBookingParams = getBookingParams;
 
         ////////////
+
+        $rootScope.$on('dateSelected', onDateSelected);
+
+        function onDateSelected() {
+            if (bookingDataFactory.start == null && bookingDataFactory.end == null) {
+                vm.matchedObjects = [];
+            } else {
+                vm.matchedObjects = vm.availableObjects;
+            }
+        }
 
         function getBookingParams(object) {
             if (bookingDataFactory.hasTime()) {

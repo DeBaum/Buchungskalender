@@ -12,6 +12,8 @@
   "homepage": "https://github.com/DeBaum/Buchungskalender#readme",
   "dependencies": {
     "angular-ui-calendar": "^1.0.2",
-    "angular-ui-router": "^0.2.15"
+    "angular-ui-router": "^0.2.15",
+    "moment": "^2.11.0",
+    "moment-range": "^2.1.0"
   }
 }

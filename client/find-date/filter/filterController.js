@@ -2,14 +2,14 @@
     angular.module('bkClient')
         .controller('FilterController', FilterController);
 
-    FilterController.$inject = ['bookingDataFactory', '$rootScope'];
-    function FilterController(bookingDataFactory, $rootScope) {
+    FilterController.$inject = ['bookingDataFactory', '$rootScope', 'ReservationService', 'CategoryService', 'ObjectService'];
+    function FilterController(bookingDataFactory, $rootScope, ReservationService, CategoryService, ObjectService) {
         var vm = this;
 
         vm.bookingData = bookingDataFactory;
 
-        vm.categories = [{id: 1, title: 'Autos'}, {id: 2, title: 'Räume'}];
-        vm.availableObjects = [{id: 1, title: 'Ford'}, {id: 2, title: 'Opel'}];
+        vm.categories = CategoryService.categories;
+        vm.availableObjects = ObjectService.objects;
         vm.matchedObjects = [];
         vm.getCategoryName = _.constant(_.result(_.find(vm.categories, {id: vm.categoryId}), 'title'));
         vm.object = null;
@@ -24,7 +24,7 @@
             if (bookingDataFactory.start == null && bookingDataFactory.end == null) {
                 vm.matchedObjects = [];
             } else {
-                vm.matchedObjects = vm.availableObjects;
+                vm.matchedObjects = ReservationService.getAviableObjects(bookingDataFactory.start, bookingDataFactory.end);
             }
         }
 

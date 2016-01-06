@@ -2,25 +2,8 @@
     angular.module('bkClient')
         .controller('CalendarController', CalendarController);
 
-    CalendarController.$inject = ['bookingDataFactory', '$rootScope', '$state'];
-    function CalendarController(bookingDataFactory, $rootScope, $state) {
-        var date = new Date();
-        var d = date.getDate();
-        var m = date.getMonth();
-        var y = date.getFullYear();
-        var allEvents = [
-            {title: 'Karl (Ford)', object: {id: 1}, start: new Date(y, m, d, 14, 0), end: new Date(y, m, d, 17, 0)},
-            {title: 'Franz (Ford)', object: {id: 1}, start: new Date(y, m, d + 3, 13, 0), end: new Date(y, m, d + 3, 16, 0)},
-            {title: 'Ute (Ford)', object: {id: 1}, start: new Date(y, m, d - 2, 10, 0), end: new Date(y, m, d - 2, 12, 0)},
-            {title: 'Walter (Ford)', object: {id: 1}, start: new Date(y, m, d + 7, 14, 0), end: new Date(y, m, d + 7, 17, 0)},
-            {title: 'Carsten (Ford)', object: {id: 1}, start: new Date(y, m, d + 8, 8, 0), end: new Date(y, m, d + 11, 18, 0)},
-            {title: 'Ferdinand', object: {id: 2}, start: new Date(y, m, d - 1, 14, 0), end: new Date(y, m, d - 1, 17, 0)},
-            {title: 'Brigitte', object: {id: 2}, start: new Date(y, m, d + 2, 11, 0), end: new Date(y, m, d + 2, 15, 0)},
-            {title: 'Manuela', object: {id: 2}, start: new Date(y, m, d - 2, 9, 0), end: new Date(y, m, d - 2, 13, 0)},
-            {title: 'Stephan', object: {id: 2}, start: new Date(y, m, d + 7, 14, 0), end: new Date(y, m, d + 7, 17, 0)},
-            {title: 'Jan', object: {id: 2}, start: new Date(y, m, d + 9, 8, 0), end: new Date(y, m, d + 12, 18, 0)}
-        ];
-
+    CalendarController.$inject = ['bookingDataFactory', '$rootScope', '$state', 'ReservationService'];
+    function CalendarController(bookingDataFactory, $rootScope, $state, ReservationService) {
         var eventFilter = {
             object: null
         };
@@ -130,15 +113,13 @@
                 vm.events[0].pop();
             }
 
-            var filtered = [];
+            var aviableObjects = [];
             if (eventFilter.object != null) {
-                filtered = _.filter(allEvents, function (event) {
-                    return event.object.id == eventFilter.object.id;
-                });
+                aviableObjects = ReservationService.getForObject(eventFilter.object);
             }
 
-            for (var i = 0; i < filtered.length; i++) {
-                vm.events[0].push(filtered[i]);
+            for (var i = 0; i < aviableObjects.length; i++) {
+                vm.events[0].push(aviableObjects[i]);
             }
         }
     }

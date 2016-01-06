@@ -39,6 +39,7 @@ function npmSrc($module_rel_path) {
 <link rel="stylesheet" href="<?php src('find-date/calendar/ui-calendar-mod.css') ?>">
 <link rel="stylesheet" href="<?php src('find-date/find-date.css') ?>">
 <link rel="stylesheet" href="<?php src('book-object/book-object.css') ?>">
+<link rel="stylesheet" href="<?php src('find-date/filter/filterView.css') ?>">
 
 <div ng-app="bkClient">
 	<h1>Buchungskalender</h1>

@@ -1,3 +1,3 @@
 (function () {
-    angular.module('bkClient', ['ui.calendar', 'ui.router']);
+    angular.module('bkClient', ['ui.calendar', 'ui.router', 'ngAnimate']);
 })();

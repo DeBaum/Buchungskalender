@@ -13,8 +13,9 @@ function npmSrc($module_rel_path) {
 	var bkRootPath = '<?php src('') ?>';
 </script>
 
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
+<script src="<?php npmSrc('angular/angular.min.js') ?>"></script>
+<script src="<?php npmSrc('angular-animate/angular-animate.min.js') ?>"></script>
 
 <script>
 	$ = $ || jQuery;
@@ -23,10 +24,9 @@ function npmSrc($module_rel_path) {
 
 <script src="<?php npmSrc('moment/min/moment-with-locales.min.js') ?>"></script>
 <script src="<?php npmSrc('moment-range/dist/moment-range.min.js') ?>"></script>
+<script src="<?php npmSrc('fullcalendar/dist/fullcalendar.min.js') ?>"></script>
 <script src="<?php npmSrc('angular-ui-calendar/src/calendar.js') ?>"></script>
 <script src="<?php npmSrc('angular-ui-router/release/angular-ui-router.min.js') ?>"></script>
-
-<script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.5.0/fullcalendar.min.js"></script>
 
 <script src="<?php src('app.js') ?>"></script>
 <script src="<?php src('routes.js') ?>"></script>

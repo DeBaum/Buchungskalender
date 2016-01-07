@@ -3,10 +3,13 @@ function src($rel_path) {
 	echo plugins_url() . '/Buchungskalender/admin/' . $rel_path;
 }
 
+function npmSrc($module_rel_path) {
+	echo plugins_url() . '/Buchungskalender/node_modules/' . $module_rel_path;
+}
 ?>
 
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
+<script src="<?php npmSrc('angular/angular.min.js') ?>"></script>
+<script src="//localhost.de/static/lodash.min.js"></script>
 
 <script src="<?php src('shared/adminApp.js') ?>"></script>
 <script src="<?php src('extras/app.js') ?>"></script>

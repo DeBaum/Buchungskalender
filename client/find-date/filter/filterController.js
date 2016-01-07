@@ -9,7 +9,7 @@
         vm.bookingData = bookingDataFactory;
 
         vm.categories = CategoryService.categories;
-        vm.availableObjects = ObjectService.objects;
+        vm.availableObjects = ObjectService.getForCategory(vm.bookingData.categoryId);
         vm.matchedObjects = [];
         vm.getCategoryName = _.constant(_.result(_.find(vm.categories, {id: vm.categoryId}), 'title'));
         vm.object = null;

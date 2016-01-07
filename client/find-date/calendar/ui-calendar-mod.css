@@ -18,3 +18,8 @@ html {
     font-size: 28px;
     line-height: 0.5em;
 }
+
+.fc-day-grid-event,
+.fc-time-grid-event {
+    cursor: pointer;
+}

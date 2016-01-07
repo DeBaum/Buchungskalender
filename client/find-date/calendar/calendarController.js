@@ -30,6 +30,7 @@
             },
             allDayText: '',
             slotLabelFormat: 'H:mm',
+            timeFormat: 'H(:mm)',
             views: {
                 agendaWeek: {
                     columnFormat: 'ddd D.M'

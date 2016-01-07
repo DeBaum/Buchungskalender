@@ -13,7 +13,7 @@ function npmSrc($module_rel_path) {
 	var bkRootPath = '<?php src('') ?>';
 </script>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
+<script src="//localhost.de/static/lodash.min.js"></script>
 <script src="<?php npmSrc('angular/angular.min.js') ?>"></script>
 <script src="<?php npmSrc('angular-animate/angular-animate.min.js') ?>"></script>
 
@@ -43,6 +43,7 @@ function npmSrc($module_rel_path) {
 <script src="<?php src('book-object/bookObjectController.js') ?>"></script>
 <script src="<?php src('book-object/extras/extrasController.js') ?>"></script>
 
+<link rel="stylesheet" href="<?php npmSrc('fullcalendar/dist/fullcalendar.min.css') ?>">
 <link rel="stylesheet" href="<?php src('find-date/calendar/ui-calendar-mod.css') ?>">
 <link rel="stylesheet" href="<?php src('find-date/find-date.css') ?>">
 <link rel="stylesheet" href="<?php src('book-object/book-object.css') ?>">

@@ -8,5 +8,6 @@
     <orderEntry type="library" name="lodash" level="application" />
     <orderEntry type="library" name="fullcalendar" level="application" />
     <orderEntry type="library" name="moment-with-locales" level="application" />
+    <orderEntry type="library" name="jquery-2.1.4" level="application" />
   </component>
 </module>

@@ -20,7 +20,10 @@
                 {id: 7, title: '_', object: {id: 4}, reservation: {name: 'Brigitte'}, start: new Date(y, m, d + 2, 11, 0), end: new Date(y, m, d + 2, 15, 0)},
                 {id: 8, title: '_', object: {id: 4}, reservation: {name: 'manuela'}, start: new Date(y, m, d - 2, 9, 0), end: new Date(y, m, d - 2, 13, 0)},
                 {id: 9, title: '_', object: {id: 4}, reservation: {name: 'Stephan'}, start: new Date(y, m, d + 7, 14, 0), end: new Date(y, m, d + 7, 17, 0)},
-                {id: 10, title: '_', object: {id: 4}, reservation: {name: 'Jan'}, start: new Date(y, m, d + 9, 8, 0), end: new Date(y, m, d + 12, 18, 0)}
+                {id: 11, title: '_', object: {id: 5}, reservation: {name: 'Jan'}, start: new Date(y, m, d - 7, 8, 0), end: new Date(y, m, d -7, 18, 0)},
+                {id: 12, title: '_', object: {id: 5}, reservation: {name: 'Sebastian'}, start: new Date(y, m, d - 7, 12, 0), end: new Date(y, m, d - 7, 14, 0)},
+                {id: 13, title: '_', object: {id: 5}, reservation: {name: 'Frida'}, start: new Date(y, m, d - 7, 10, 0), end: new Date(y, m, d - 7, 16, 0)},
+                {id: 14, title: '_', object: {id: 5}, reservation: {name: 'Jürgen'}, start: new Date(y, m, d - 7, 12, 0), end: new Date(y, m, d - 7, 18, 0)}
             ],
             getAviableObjects: getAviableObjects,
             getForObject: getReservationsForObject,

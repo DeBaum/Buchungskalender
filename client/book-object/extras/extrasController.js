@@ -26,7 +26,7 @@
                     {"type": "text", "title": "Buget", "name": "buget"},
                     {"type": "text", "title": "Konto", "name": "konto"},
                     {"type": "text", "title": "Kostenstelle", "name": "kostenstelle"},
-                    {"type": "text", "title": "Speisen/Getränke", "name": "speisen"}, // TODO: Textarea?
+                    {"type": "textarea", "title": "Speisen/Getränke", "name": "speisen"},
                     {"type": "text", "title": "Personen", "name": "persons"}
                 ]
             },
@@ -50,6 +50,11 @@
                     {"type": "text", "title": "Start", "name": "time_start"},
                     {"type": "text", "title": "Ende", "name": "Time_stop"}
                 ]
+            },
+            {
+                "id": 18,
+                "title": "Beschreibung",
+                "type": "textarea"
             }
         ];
 

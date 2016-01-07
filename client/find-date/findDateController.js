@@ -2,8 +2,8 @@
     angular.module('bkClient')
         .controller('FindDateController', FindDateController);
 
-    FindDateController.$inject = ['bookingDataFactory'];
-    function FindDateController(bookingDataFactory) {
+    FindDateController.$inject = ['bookingDataFactory', 'CategoryService'];
+    function FindDateController(bookingDataFactory, categoryService) {
         var vm = this;
         vm.templates = {
             calendar: bkRootPath + 'find-date/calendar/calendarView.html',
@@ -11,6 +11,10 @@
         };
 
         bookingDataFactory.update();
+
+        vm.getCategoryName = function getCategoryName() {
+            return categoryService.getById(bookingDataFactory.categoryId).title;
+        };
 
         ////////////
     }

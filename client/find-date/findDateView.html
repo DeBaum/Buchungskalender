@@ -1,4 +1,5 @@
 <div ng-controller="FindDateController as fd">
+    <h1>Übersicht - {{fd.getCategoryName()}}</h1>
     <div ng-include="fd.templates.calendar"
          class="find-date-calendar"></div>
     <div ng-include="fd.templates.filter"

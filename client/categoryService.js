@@ -5,6 +5,7 @@
     CategoryService.$inject = [];
     function CategoryService() {
         var service = {
+            getById: getById,
             categories: [
                 {
                     id: 1,
@@ -26,7 +27,9 @@
         return service;
 
         //////////
-
+        function getById(id) {
+            return _.find(service.categories, {id: id});
+        }
 
     }
 })();

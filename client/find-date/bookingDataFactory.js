@@ -2,8 +2,8 @@
     angular.module('bkClient')
         .factory('bookingDataFactory', bookingDataFactory);
 
-    bookingDataFactory.$inject = ['$stateParams'];
-    function bookingDataFactory($stateParams) {
+    bookingDataFactory.$inject = ['$stateParams', '$state', 'ReservationService', 'ObjectService'];
+    function bookingDataFactory($stateParams, $state, ReservationService, ObjectService) {
         var r = {
             categoryId: null,
             objectId: null,
@@ -24,10 +24,19 @@
         }
 
         function readParams() {
-            r.categoryId = $stateParams.categoryId || r.categoryId;
-            r.objectId = $stateParams.objectId || r.objectId;
-            r.start = $stateParams.start ? moment($stateParams.start) : r.start;
-            r.end = $stateParams.end ? moment($stateParams.end) : r.end;
+            if ($state.is('edit-reservation')) {
+                var reservation = ReservationService.getById($stateParams.reservationId);
+                var object = ObjectService.getById(reservation.object.id);
+                r.categoryId = object.categoryId || r.categoryId;
+                r.objectId = object.id || r.objectId;
+                r.start = moment(reservation.start) ? moment($stateParams.start) : r.start;
+                r.end = moment(reservation.end) ? moment($stateParams.end) : r.end;
+            } else {
+                r.categoryId = $stateParams.categoryId || r.categoryId;
+                r.objectId = $stateParams.objectId || r.objectId;
+                r.start = $stateParams.start ? moment($stateParams.start) : r.start;
+                r.end = $stateParams.end ? moment($stateParams.end) : r.end;
+            }
         }
     }
 })();

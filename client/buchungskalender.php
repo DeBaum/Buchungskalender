@@ -33,7 +33,7 @@ function npmSrc($module_rel_path) {
 
 <script src="<?php src('categoryService.js') ?>"></script>
 <script src="<?php src('objectService.js') ?>"></script>
-<script src="<?php src('find-date/reservationService.js') ?>"></script>
+<script src="<?php src('reservationService.js') ?>"></script>
 
 <script src="<?php src('category-selection/categoryController.js') ?>"></script>
 <script src="<?php src('find-date/bookingDataFactory.js') ?>"></script>

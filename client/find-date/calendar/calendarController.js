@@ -46,6 +46,7 @@
             },
             selectable: true,
             dayClick: dayClicked,
+            eventClick: reservationClicked,
             select: onSelect,
             viewRender: onViewChange
         };
@@ -78,6 +79,10 @@
                     month: 'Zurück'
                 }
             });
+        }
+
+        function reservationClicked(event) {
+            $state.go('edit-reservation', {reservationId: event.id});
         }
 
         function onSelect(start, end) {

@@ -57,3 +57,41 @@ TODO: Auslagern
 }
 
 /**  **/
+
+/*
+Pour dire en CSS3 ce qui devra être animé :
+Angular ajoute dynamiquement des classes CSS.
+La transition se fait soit entre ng-enter et ng-enter-active
+ou entre ng-leave et ng-leave-active.
+*/
+.animate-if.ng-enter, .animate-if.ng-leave {
+    -webkit-transition: 500ms linear all;
+    -moz-transition: 500ms linear all;
+    -ms-transition: 500ms linear all;
+    -o-transition: 500ms linear all;
+    transition: 500ms linear all;
+}
+
+/* du début de l'entrée */
+.animate-if.ng-enter {
+    max-height: 0;
+    /*opacity: 0;*/
+}
+
+/* à la fin de l'entrée */
+.animate-if.ng-enter.ng-enter-active {
+    max-height: 999px;
+    /*opacity:1;*/
+}
+
+/* du début de la sortie */
+.animate-if.ng-leave {
+    max-height: 999px;
+    /*opacity:1;*/
+}
+
+/* à la fin de la sortie */
+.animate-if.ng-leave.ng-leave-active {
+    max-height: 0;
+    /*opacity:1;*/
+}

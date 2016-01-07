@@ -51,35 +51,38 @@
                                            ng-model="extras.selectedExtras[e.id]">
                                 </div>
                             </div>
-                            <div class="row form-group" ng-if="extras.selectedExtras[e.id]"
-                                 ng-repeat="field in e.subfields">
-                                <!-- Extra Field -->
-                                <div class="col-sm-3">
-                                    <label for="extra{{e.id}}.field{{field.id}}"
-                                           class="control-label">{{field.title}}</label>
-                                </div>
-                                <div class="col-sm-9" ng-switch="field.type">
-                                    <input ng-switch-when="check" class="checkbox" type="checkbox"
-                                           name="{{field.name}}"
-                                           id="extra{{e.id}}.field{{field.id}}">
+                            <div class="animate-if" ng-if="extras.selectedExtras[e.id]">
+                                <div class="row form-group"
+                                     ng-repeat="field in e.subfields">
+                                    <!-- Extra Field -->
+                                    <div class="col-sm-3">
+                                        <label for="extra{{e.id}}.field{{field.id}}"
+                                               class="control-label">{{field.title}}</label>
+                                    </div>
+                                    <div class="col-sm-9" ng-switch="field.type">
+                                        <input ng-switch-when="check" class="checkbox" type="checkbox"
+                                               name="{{field.name}}"
+                                               id="extra{{e.id}}.field{{field.id}}">
 
-                                    <input ng-switch-when="text" type="text" name="{{field.name}}"
-                                           id="extra{{e.id}}.field{{field.id}}"
-                                           class="form-control">
+                                        <input ng-switch-when="text" type="text" name="{{field.name}}"
+                                               id="extra{{e.id}}.field{{field.id}}"
+                                               class="form-control">
 
-                                    <textarea ng-switch-when="textarea" name="{{field.name}}" id="extra{{e.id}}.field{{field.id}}"
+                                    <textarea ng-switch-when="textarea" name="{{field.name}}"
+                                              id="extra{{e.id}}.field{{field.id}}"
                                               class="form-control" rows="4"></textarea>
 
-                                    <select ng-switch-when="select" name="{{field.name}}"
-                                            id="extra{{e.id}}.field{{field.id}}"
-                                            class="form-control">
-                                        <option ng-repeat="val in field.values" value="{{val.id}}"
-                                                ng-selected="val.default">
-                                            {{val.title}}
-                                        </option>
-                                    </select>
+                                        <select ng-switch-when="select" name="{{field.name}}"
+                                                id="extra{{e.id}}.field{{field.id}}"
+                                                class="form-control">
+                                            <option ng-repeat="val in field.values" value="{{val.id}}"
+                                                    ng-selected="val.default">
+                                                {{val.title}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <!-- Extra Field -->
                                 </div>
-                                <!-- Extra Field -->
                             </div>
                         </div>
 

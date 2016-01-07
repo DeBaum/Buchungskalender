@@ -51,8 +51,6 @@ function npmSrc($module_rel_path) {
 <link rel="stylesheet" href="<?php src('find-date/filter/filterView.css') ?>">
 
 <div ng-app="bkClient">
-	<h1>Buchungskalender</h1>
-
 	<ui-view>
 		<h2>Lade ...</h2>
 	</ui-view>

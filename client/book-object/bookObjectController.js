@@ -2,8 +2,8 @@
     angular.module('bkClient')
         .controller('BookObjectController', BookObjectController);
 
-    BookObjectController.$inject = ['$scope', 'bookingDataFactory', 'ObjectService'];
-    function BookObjectController($scope, bookingDataFactory, ObjectService) {
+    BookObjectController.$inject = ['$scope', 'bookingDataFactory', 'ObjectService', '$state'];
+    function BookObjectController($scope, bookingDataFactory, ObjectService, $state) {
         bookingDataFactory.update();
 
         $scope.bookingData = bookingDataFactory;
@@ -19,7 +19,13 @@
         $scope.objects = ObjectService.getForCategory(bookingDataFactory.categoryId);
         $scope.object = _.find($scope.objects, {id: bookingDataFactory.objectId});
 
+        $scope.isEditing = isEditing;
+
         ////////////
+
+        function isEditing() {
+            return $state.is('edit-reservation');
+        }
 
         function setEventTimeStr() {
             if ($scope.event) {

@@ -20,5 +20,10 @@
             url: '/category/{categoryId:int}/object/{objectId:int}/book?start&end',
             templateUrl: bkRootPath + 'book-object/bookObjectView.html'
         });
+
+        $stateProvider.state('edit-reservation', {
+            url: '/reservation/{reservationId:int}/edit',
+            templateUrl: bkRootPath + 'book-object/bookObjectView.html'
+        });
     }
 })();

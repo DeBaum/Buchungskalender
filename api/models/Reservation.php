@@ -36,6 +36,9 @@ class Reservation extends BaseModel
         if (!$this->isInt($creatorId)) {
             throw new \InvalidArgumentException("missing creator_id");
         }
+        if (!$this->isInt($quantity, 1)) {
+            throw new \InvalidArgumentException("missing or invalid quantity");
+        }
 
         if ($isNew) {
             $creationTime = null;

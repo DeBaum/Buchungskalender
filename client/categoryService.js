@@ -10,17 +10,17 @@
                 {
                     id: 1,
                     title: 'Autos',
-                    thumbnail: '//localhost.de/static/auto.jpg'
+                    thumbnail: bkRootPath + 'tmp/auto.jpg'
                 },
                 {
                     id: 2,
                     title: 'Räume',
-                    thumbnail: '//localhost.de/static/raum.jpg'
+                    thumbnail: bkRootPath + 'tmp/raum.jpg'
                 },
                 {
                     id: 3,
                     title: 'Beamer',
-                    thumbnail: '//localhost.de/static/beamer.jpg'
+                    thumbnail: bkRootPath + 'tmp/beamer.jpg'
                 }
             ]
         };

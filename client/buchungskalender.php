@@ -13,7 +13,7 @@ function npmSrc($module_rel_path) {
 	var bkRootPath = '<?php src('') ?>';
 </script>
 
-<script src="//localhost.de/static/lodash.min.js"></script>
+<script src="<?php npmSrc('lodash/dist/lodash.min.js') ?>"></script>
 <script src="<?php npmSrc('angular/angular.min.js') ?>"></script>
 <script src="<?php npmSrc('angular-animate/angular-animate.min.js') ?>"></script>
 

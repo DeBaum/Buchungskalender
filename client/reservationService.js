@@ -2,18 +2,30 @@
     angular.module('bkClient')
         .factory('ReservationService', ReservationService);
 
-    ReservationService.$inject = ['ObjectService', '$stateParams', 'ReservationResource'];
-    function ReservationService(ObjectService, $stateParams, ReservationR) {
+    ReservationService.$inject = ['ObjectService', '$stateParams', 'ReservationResource', '$q'];
+    function ReservationService(ObjectService, $stateParams, ReservationR, $q) {
         var service = {
             reservations: [],
             getAviableObjects: getAviableObjects,
             getForObject: getReservationsForObject,
             getById: getReservationById,
-            load: loadReservation
+            load: loadReservation,
+            loadForObject: loadForObject
         };
         return service;
 
         //////////
+
+        function loadForObject(objectId) {
+            var deferred = $q();
+
+            ReservationR.getAll({object_id: objectId}, function (objects) {
+                _.forEach(objects, insertReservation);
+                deferred.resolve(objects);
+            });
+
+            return deferred.promise;
+        }
 
         function loadReservation(id) {
             var fn = ReservationR.get;

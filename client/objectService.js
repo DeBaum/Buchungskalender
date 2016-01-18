@@ -18,7 +18,7 @@
         function loadObjects(categoryId) {
             var deferred = $q.defer();
             ObjectR.getAll({category_id: categoryId}, function (objects) {
-                if (_.isArray(objects)) {
+                if (!_.isArray(objects)) {
                     objects = [objects];
                 }
                 _.forEach(objects, insertObject);

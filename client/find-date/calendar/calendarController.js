@@ -58,6 +58,9 @@
         //noinspection JSUnusedLocalSymbols
         function onFilterChanged(event, attr, val) {
             if (attr == 'object') {
+                if (val) {
+                    ReservationService.loadForObject(val.id);
+                }
                 vm.showEvents = val != null;
                 eventFilter.object = val;
             }

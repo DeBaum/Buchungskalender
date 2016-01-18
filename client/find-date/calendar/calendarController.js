@@ -28,7 +28,7 @@
                 agendaWeek: 'Woche',
                 agendaDay: 'Tag'
             },
-            allDayText: '',
+            allDaySlot: false,
             slotLabelFormat: 'H:mm',
             timeFormat: 'H(:mm)',
             views: {
@@ -65,6 +65,7 @@
                 eventFilter.object = val;
             }
             filterEvents();
+            markSelected();
         }
 
         function dayClicked(date) {
@@ -76,7 +77,7 @@
                 defaultDate: date,
                 defaultView: 'agendaWeek',
                 header: {
-                    left: 'month'
+                    left: 'month agendaDay'
                 },
                 buttonText: {
                     month: 'Zurück'
@@ -99,8 +100,12 @@
                 bookingDataFactory.start._ambigTime = false;
                 bookingDataFactory.end._ambigTime = false;
 
-                $('[ui-calendar="cal.config"]').fullCalendar('select', bookingDataFactory.start, bookingDataFactory.end);
+                markSelected();
             }
+        }
+
+        function markSelected() {
+            $('[ui-calendar="cal.config"]').fullCalendar('select', bookingDataFactory.start, bookingDataFactory.end);
         }
 
         function onViewChange(view) {
@@ -114,6 +119,15 @@
                         left: 'goToCategory'
                     }
                 });
+            } else if ('agendaWeek,agendaDay'.indexOf(view.name) >= 0) {
+                _.merge(vm.config, {
+                    defaultView: view.name,
+                    defaultDate: bookingDataFactory.start,
+                    header: {
+                        left: 'month ' + (view.name == 'agendaDay' ? 'agendaWeek' : 'agendaDay')
+                    }
+                });
+                markSelected();
             }
         }
 

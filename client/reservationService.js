@@ -17,20 +17,18 @@
         //////////
 
         function loadForObject(objectId) {
-            var deferred = $q();
-
-            ReservationR.getAll({object_id: objectId}, function (objects) {
-                _.forEach(objects, insertReservation);
-                deferred.resolve(objects);
+            return $q(function (resolve) {
+                ReservationR.getAll({object_id: objectId}, function (objects) {
+                    _.forEach(objects, insertReservation);
+                    resolve(objects);
+                });
             });
-
-            return deferred.promise;
         }
 
         function loadReservation(id) {
             var fn = ReservationR.get;
             if (!id) {
-                fn  = ReservationR.getAll;
+                fn = ReservationR.getAll;
             }
             fn({id: id}, function (reservations) {
                 if (!_.isArray(reservations)) {

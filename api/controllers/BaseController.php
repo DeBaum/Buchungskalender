@@ -38,33 +38,6 @@ abstract class BaseController
     }
 
     /**
-     * Converts the given statement to the WordPress-compliant format
-     * `SELECT ... WHERE id = :d` will get `SELECT ... WHERE id = %d`.
-     *
-     * @param string $sql Unparsed statement
-     * @return string Parsed statement
-     */
-    private function parsePrepare($sql)
-    {
-        $sql = str_replace(":d", "%d", $sql);
-        $sql = str_replace(":s", "%s", $sql);
-        return $sql;
-    }
-
-    /**
-     * Checks if the query contains placeholders.
-     *
-     * @param string $query Query
-     * @return bool If the query contains placeholders
-     */
-    private static function hasPlaceholders($query)
-    {
-        // this is important because the WordPress database object
-        // throws an exception if prepare() is called without placeholders
-        return strpos($query, '%') !== false;
-    }
-
-    /**
      * Fetches one row from the database.
      *
      * @param $query string SELECT statement (optionally with wildcards)
@@ -85,7 +58,6 @@ abstract class BaseController
         }
     }
 
-    // region Validation Helper
 
     /**
      * Updates one or more rows.
@@ -118,6 +90,8 @@ abstract class BaseController
         return $this->db->insert_id;
     }
 
+    // region Validation Helper
+
     protected function isInt($value, $min = 1)
     {
         if (!is_numeric($value)) {
@@ -126,10 +100,6 @@ abstract class BaseController
 
         return $value >= $min;
     }
-
-    // endregion
-
-    //region Internal Helper
 
     protected function isString($value, $minLength = 1)
     {
@@ -146,5 +116,36 @@ abstract class BaseController
         return true; // TODO
     }
 
-    //endregion
+    // endregion
+
+    // region Internal Helper
+
+    /**
+     * Converts the given statement to the WordPress-compliant format
+     * `SELECT ... WHERE id = :d` will get `SELECT ... WHERE id = %d`.
+     *
+     * @param string $sql Unparsed statement
+     * @return string Parsed statement
+     */
+    private function parsePrepare($sql)
+    {
+        $sql = str_replace(":d", "%d", $sql);
+        $sql = str_replace(":s", "%s", $sql);
+        return $sql;
+    }
+
+    /**
+     * Checks if the query contains placeholders.
+     *
+     * @param string $query Query
+     * @return bool If the query contains placeholders
+     */
+    private static function hasPlaceholders($query)
+    {
+        // this is important because the WordPress database object
+        // throws an exception if prepare() is called without placeholders
+        return strpos($query, '%') !== false;
+    }
+
+    // endregion
 }

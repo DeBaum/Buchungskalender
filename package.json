@@ -16,6 +16,7 @@
     "angular-ui-calendar": "^1.0.2",
     "angular-ui-router": "^0.2.15",
     "fullcalendar": "^2.5.0",
+    "lodash": "git+https://github.com/lodash/lodash.git",
     "moment": "^2.11.0",
     "moment-range": "^2.1.0"
   }

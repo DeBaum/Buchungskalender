@@ -3,6 +3,10 @@ function src($rel_path) {
 	echo plugins_url() . '/Buchungskalender/client/' . $rel_path;
 }
 
+function getApiRoot() {
+	echo plugins_url() . '/Buchungskalender/api';
+}
+
 function npmSrc($module_rel_path) {
 	echo plugins_url() . '/Buchungskalender/node_modules/' . $module_rel_path;
 }
@@ -11,9 +15,10 @@ function npmSrc($module_rel_path) {
 
 <script>
 	var bkRootPath = '<?php src('') ?>';
+	var bkApiRoot = '<?php getApiRoot() ?>';
 </script>
 
-<script src="//localhost.de/static/lodash.min.js"></script>
+<script src="<?php npmSrc('lodash/dist/lodash.min.js') ?>"></script>
 <script src="<?php npmSrc('angular/angular.min.js') ?>"></script>
 <script src="<?php npmSrc('angular-animate/angular-animate.min.js') ?>"></script>
 
@@ -27,6 +32,12 @@ function npmSrc($module_rel_path) {
 <script src="<?php npmSrc('fullcalendar/dist/fullcalendar.min.js') ?>"></script>
 <script src="<?php npmSrc('angular-ui-calendar/src/calendar.js') ?>"></script>
 <script src="<?php npmSrc('angular-ui-router/release/angular-ui-router.min.js') ?>"></script>
+<script src="<?php npmSrc('angular-resource/angular-resource.min.js') ?>"></script>
+
+<script src="<?php src('resources/app.js') ?>"></script>
+<script src="<?php src('resources/categoryResource.js') ?>"></script>
+<script src="<?php src('resources/objectResource.js') ?>"></script>
+<script src="<?php src('resources/reservationResource.js') ?>"></script>
 
 <script src="<?php src('app.js') ?>"></script>
 <script src="<?php src('routes.js') ?>"></script>

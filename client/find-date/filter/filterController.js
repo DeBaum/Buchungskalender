@@ -9,12 +9,17 @@
         vm.bookingData = bookingDataFactory;
 
         vm.categories = CategoryService.categories;
-        vm.availableObjects = ObjectService.getForCategory(vm.bookingData.categoryId);
+        vm.availableObjects = [];
         vm.matchedObjects = [];
         vm.getCategoryName = _.constant(_.result(_.find(vm.categories, {id: vm.categoryId}), 'title'));
         vm.object = null;
         vm.getBookingParams = getBookingParams;
         vm.onFilterChanged = onFilterChanged;
+
+        ObjectService.load(vm.bookingData.categoryId)
+            .then(function (objectsInCategory) {
+                vm.availableObjects = objectsInCategory;
+            });
 
         ////////////
 

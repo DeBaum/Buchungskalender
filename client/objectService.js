@@ -2,30 +2,29 @@
     angular.module('bkClient')
         .factory('ObjectService', ObjectService);
 
-    ObjectService.$inject = ['ObjectResource'];
-    function ObjectService(ObjectR) {
+    ObjectService.$inject = ['ObjectResource', '$q'];
+    function ObjectService(ObjectR, $q) {
         var service = {
             objects: [],
             getForCategory: getObjectsForCategory,
             getName: getObjectName,
             getById: getObjectById,
-            load: loadObject
+            load: loadObjects
         };
         return service;
 
         //////////
 
-        function loadObject(id) {
-            var fn = ObjectR.get;
-            if (!id) {
-                fn = ObjectR.getAll;
-            }
-            fn({id: id}, function (objects) {
+        function loadObjects(categoryId) {
+            var deferred = $q.defer();
+            ObjectR.getAll({category_id: categoryId}, function (objects) {
                 if (_.isArray(objects)) {
                     objects = [objects];
                 }
                 _.forEach(objects, insertObject);
+                deferred.resolve(objects);
             });
+            return deferred.promise;
         }
 
         function insertObject(object) {

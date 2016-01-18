@@ -22,7 +22,7 @@
         };
         return service;
 
-        //////////
+        ////////// bla
 
         function getObjectsForCategory(category) {
             var id;

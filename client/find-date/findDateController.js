@@ -11,9 +11,11 @@
         };
 
         bookingDataFactory.update();
+        categoryService.load();
 
         vm.getCategoryName = function getCategoryName() {
-            return categoryService.getById(bookingDataFactory.categoryId).title;
+            var category = categoryService.getById(bookingDataFactory.categoryId);
+            return (category || {title: ''}).title;
         };
 
         ////////////

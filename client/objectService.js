@@ -13,7 +13,7 @@
         };
         return service;
 
-        //////////
+        ////////// bla
 
         function loadObject(id) {
             var fn = ObjectR.get;

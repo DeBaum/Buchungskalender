@@ -132,7 +132,7 @@ abstract class BaseController
 
     protected function isDate($value)
     {
-        return true; // TODO
+        return strtotime($value) !== false;
     }
 
     // endregion

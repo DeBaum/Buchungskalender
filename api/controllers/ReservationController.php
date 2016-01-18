@@ -84,8 +84,25 @@ class ReservationController extends BaseController
 
     public function getAll()
     {
+        $resourceId = $this->getParam("resource_id");
+        if (!$this->isInt($resourceId, 1))
+            return returnSlimError(GlobalErrors::$INVALID_REQUEST, "missing resource_id", null);
+        $from = $this->getParam("from");
+        if (!$this->isDate($from))
+            return returnSlimError(GlobalErrors::$INVALID_REQUEST, "missing from parameter", null);
+        $to = $this->getParam("to");
+        if (!$this->isDate($to))
+            return returnSlimError(GlobalErrors::$INVALID_REQUEST, "missing to parameter", null);
+
+        $resourceController = new ResourceController();
+        $resource = $resourceController->get($resourceId);
+        if ($resource == null) {
+            return returnSlimError(GlobalErrors::$INVALID_REQUEST, "resource not found", null);
+        }
+
         $reservation = array();
-        foreach ($this->fetchAll("SELECT * FROM bookings_reservation") as $row) {
+        foreach ($this->fetchAll("SELECT * FROM bookings_reservation WHERE resource_id = :d AND :s <= time_to AND :s >= time_from",
+            [$resourceId, $from, $to]) as $row) {
             array_push($reservation, Reservation::fromDb($row));
         }
 

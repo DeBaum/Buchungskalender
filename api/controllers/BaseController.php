@@ -14,7 +14,10 @@ abstract class BaseController
 
     protected function fetchAll($query, $args = null)
     {
-        $query = $this->db->prepare($this->parsePrepare($query), $args);
+        $query = $this->parsePrepare($query);
+        if (self::hasPlaceholders($query)) {
+            $query = $this->db->prepare($query, $args);
+        }
         return $this->db->get_results($query);
     }
 
@@ -30,13 +33,27 @@ abstract class BaseController
     {
         $sql = str_replace(":d", "%d", $sql);
         $sql = str_replace(":s", "%s", $sql);
-
         return $sql;
+    }
+
+    /**
+     * Checks if the query contains placeholders.
+     * @param $query
+     * @return bool
+     */
+    private static function hasPlaceholders($query)
+    {
+        // this is important because the WordPress database object
+        // throws an exception if prepare() is called without placeholders
+        return strpos($query, '%') !== false;
     }
 
     protected function fetchOne($query, $args = null)
     {
-        $query = $this->db->prepare($this->parsePrepare($query), $args);
+        $query = $this->parsePrepare($query);
+        if (self::hasPlaceholders($query)) {
+            $query = $this->db->prepare($query, $args);
+        }
         $results = $this->db->get_results($query);
         if (sizeof($results) === 0) {
             return null;
@@ -50,7 +67,6 @@ abstract class BaseController
         $parsedQuery = $this->parsePrepare($query);
         $query = $this->db->prepare($parsedQuery, $args);
         $affectedRows = $this->db->query($query);
-
         return $affectedRows > 0;
     }
 
@@ -58,7 +74,7 @@ abstract class BaseController
     {
         $parsedQuery = $this->parsePrepare($query);
         $query = $this->db->prepare($parsedQuery, $args);
-        $query = str_replace("''", "NULL", $query); // wp converts nullable strins to ''
+        $query = str_replace("''", "NULL", $query); // wp converts nullable strings to ''
         $this->db->query($query);
 
         return $this->db->insert_id;

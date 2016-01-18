@@ -12,7 +12,7 @@ class Resource extends BaseModel
      * @var int
      */
     public $id;
-    public $categoryId;
+    public $category_id;
     public $title;
     public $quantity;
 
@@ -33,7 +33,7 @@ class Resource extends BaseModel
 
         $this->id = $id;
         $this->title = $title;
-        $this->categoryId = $categoryId;
+        $this->category_id = $categoryId;
         $this->quantity = $this->isInt($quantity) ? $quantity : 1;
     }
 

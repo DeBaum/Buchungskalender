@@ -145,7 +145,7 @@ class ReservationController extends BaseController
 
         $rows = $this->updateAll(
             "UPDATE bookings_reservation SET time_from = ",
-            array($resource->categoryId, $resource->title, $resource->quantity, $resource->id));
+            array($resource->category_id, $resource->title, $resource->quantity, $resource->id));
 
         if ($rows > 0) {
             returnResult($resource);

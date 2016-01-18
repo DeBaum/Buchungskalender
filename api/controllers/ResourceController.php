@@ -24,7 +24,7 @@ class ResourceController extends BaseController
 
         $inserted_id = $this->insert(
             "INSERT INTO bookings_resource(category_id, title, quantity) VALUES (:d, :s, :d)",
-            array($resource->categoryId, $resource->title, $resource->quantity));
+            array($resource->category_id, $resource->title, $resource->quantity));
 
         if ($inserted_id > 0) {
             returnResult($this->get($inserted_id));
@@ -70,7 +70,7 @@ class ResourceController extends BaseController
 
         $rows = $this->updateAll(
             "UPDATE bookings_resource SET category_id = :d, title = :s, quantity = :d WHERE id = :d",
-            array($resource->categoryId, $resource->title, $resource->quantity, $resource->id));
+            array($resource->category_id, $resource->title, $resource->quantity, $resource->id));
 
         if ($rows > 0) {
             returnResult($resource);

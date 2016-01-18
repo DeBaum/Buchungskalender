@@ -4,7 +4,7 @@ function src($rel_path) {
 }
 
 function getApiRoot() {
-	return plugins_url() . '/Buchungskalender/api';
+	echo plugins_url() . '/Buchungskalender/api';
 }
 
 function npmSrc($module_rel_path) {

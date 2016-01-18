@@ -1,4 +1,10 @@
 .idea/workspace.xml
 
+/client/tmp
+
+# npm
 node_modules
+
+# composer
 vendor
+composer.lock

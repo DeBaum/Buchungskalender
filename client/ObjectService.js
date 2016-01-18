@@ -2,27 +2,40 @@
     angular.module('bkClient')
         .factory('ObjectService', ObjectService);
 
-    ObjectService.$inject = [];
-    function ObjectService() {
+    ObjectService.$inject = ['ObjectResource'];
+    function ObjectService(ObjectR) {
         var service = {
-            objects: [
-                {id: 1, title: 'Ford', categoryId: 1},
-                {id: 2, title: 'Opel', categoryId: 1},
-                {id: 3, title: 'Konferenzraum EG', categoryId: 2},
-                {id: 4, title: 'Konferenzraum 1.OG', categoryId: 2},
-                {id: 5, title: 'Besprechungsraum 1.OG', categoryId: 2},
-                {id: 6, title: 'HDMI-Beamer', categoryId: 3},
-                {id: 7, title: 'VGA-Beamer', categoryId: 3},
-                {id: 8, title: 'OHP', categoryId: 3},
-                {id: 9, title: 'Flipchart', categoryId: 3}
-            ],
+            objects: [],
             getForCategory: getObjectsForCategory,
             getName: getObjectName,
-            getById: getObjectById
+            getById: getObjectById,
+            load: loadObject
         };
         return service;
 
         //////////
+
+        function loadObject(id) {
+            var fn = ObjectR.get;
+            if (!id) {
+                fn = ObjectR.getAll;
+            }
+            fn({id: id}, function (objects) {
+                if (_.isArray(objects)) {
+                    objects = [objects];
+                }
+                _.forEach(objects, insertObject);
+            });
+        }
+
+        function insertObject(object) {
+            var index = _.findIndex(service.objects, {id: object.id});
+            if (index === -1) {
+                service.objects.push(object);
+            } else {
+                service.objects[index] = object;
+            }
+        }
 
         function getObjectsForCategory(category) {
             var id;
@@ -36,7 +49,7 @@
 
         function getObjectName(object) {
             var id;
-            if (object == null) id=null;
+            if (object == null) id = null;
             else if (typeof object == 'number') id = object;
             else id = object.id;
 

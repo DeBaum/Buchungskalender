@@ -70,7 +70,7 @@ class Reservation extends BaseModel
             return null;
         }
 
-        return new Reservation($row->id, $row->resource_id, $row->time_from, $row->time_to, $row->creator_id,
-            $row->creation - time, $row->event_from, $row->event_to, $row->quantity);
+        return new Reservation(intval($row->id), intval($row->resource_id), $row->time_from, $row->time_to, intval($row->creator_id),
+            $row->creation_time, $row->event_from, $row->event_to, intval($row->quantity));
     }
 }

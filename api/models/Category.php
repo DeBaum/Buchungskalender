@@ -36,11 +36,11 @@ class Category extends BaseModel
             return null;
         }
 
-        return new Category($row->id, $row->title);
+        return new Category(intval($row->id), $row->title);
     }
 
     public static function fromJson($json)
     {
-        return new Category($json->id, $json->title);
+        return self::fromDb($json);
     }
 }

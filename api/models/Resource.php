@@ -48,6 +48,6 @@ class Resource extends BaseModel
             return null;
         }
 
-        return new Resource($row->id, $row->category_id, $row->title, $row->quantity);
+        return new Resource(intval($row->id), intval($row->category_id), $row->title, intval($row->quantity));
     }
 }

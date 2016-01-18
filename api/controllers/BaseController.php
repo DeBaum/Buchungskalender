@@ -2,6 +2,7 @@
 
 namespace Bookings\Controller;
 
+use Slim\Slim;
 use wpdb;
 
 /**
@@ -89,6 +90,24 @@ abstract class BaseController
         $this->db->query($query);
         return $this->db->insert_id;
     }
+
+    // region Request Helper
+    protected function getSlim()
+    {
+        return Slim::getInstance();
+    }
+
+    /**
+     * Resolves a specific parameter
+     *
+     * @param string $name Parameter name
+     * @return array|mixed|null
+     */
+    protected function getParam($name)
+    {
+        return $this->getSlim()->request->params($name, null);
+    }
+    // endregion
 
     // region Validation Helper
 

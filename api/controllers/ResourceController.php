@@ -40,8 +40,12 @@ class ResourceController extends BaseController
 
     public function getAll()
     {
+        $categoryId = $this->getParam("category_id");
+        if (!$this->isInt($categoryId, 0)) {
+            return returnSlimError(GlobalErrors::$INVALID_REQUEST, "missing category_id", null);
+        }
         $resources = array();
-        foreach ($this->fetchAll("SELECT * FROM bookings_resource") as $row) {
+        foreach ($this->fetchAll("SELECT * FROM bookings_resource WHERE category_id = :d", [$categoryId]) as $row) {
             array_push($resources, Resource::fromDb($row));
         }
 

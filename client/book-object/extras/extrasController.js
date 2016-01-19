@@ -10,9 +10,9 @@
                 "id": 1,
                 "title": "Sitzordung",
                 "type": "select",
-                "name": "sitzordung",
+                "default": 2,//0 = keine auswahl
                 "values": [
-                    {"id": 0, "title": "Keine", "default": true},
+                    {"id": 0, "title": "Keine"},
                     {"id": 1, "title": "U-Form"},
                     {"id": 2, "title": "T-Form"}
                 ]
@@ -21,8 +21,9 @@
                 "id": 7,
                 "title": "Bewirtung",
                 "type": "form",
+                "default": true,
                 "subfields": [
-                    {"type": "text", "title": "Fachbereich", "name": "fb"},
+                    {"type": "text", "title": "Fachbereich", "name": "fb", "default": "FB7"},
                     {"type": "text", "title": "Buget", "name": "buget"},
                     {"type": "text", "title": "Konto", "name": "konto"},
                     {"type": "text", "title": "Kostenstelle", "name": "kostenstelle"},
@@ -33,14 +34,12 @@
             {
                 "id": 12,
                 "title": "Anzeige Infotafel",
-                "type": "check",
-                "name": "infotafel"
+                "type": "check"
             },
             {
                 "id": 14,
                 "title": "Externer Internetzugang",
-                "type": "check",
-                "name": "internet"
+                "type": "check"
             },
             {
                 "id": 13,

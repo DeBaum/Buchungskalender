@@ -32,13 +32,4 @@ abstract class BaseExtra
     }
 
     protected abstract function createDisplayForm();
-
-    /**
-     * @param int $id Extra identifier
-     * @param string $title Extra title
-     * @param int $typeId ExtraType identifier
-     * @param mixed $config ExtraType configuration
-     * @return BaseExtra
-     */
-    public abstract static function fromDb($id, $title, $typeId, $config);
 }

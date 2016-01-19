@@ -17,6 +17,7 @@
             height: 480,
             editable: false,
             weekNumbers: true,
+            nowIndicator: true,
             header: {
                 left: 'goToCategory',
                 center: 'title',
@@ -39,7 +40,7 @@
             customButtons: {
                 goToCategory: {
                     text: 'Zurück',
-                    click: function() {
+                    click: function () {
                         $state.go('choose-category');
                     }
                 }
@@ -57,12 +58,14 @@
 
         //noinspection JSUnusedLocalSymbols
         function onFilterChanged(event, attr, val) {
-            if (attr == 'object') {
-                if (val) {
-                    ReservationService.loadForObject(val.id);
+            if (attr == 'object' && val) {
+                if (val.id >= 0) {
+                    eventFilter.object = val;
+                    vm.showEvents = true;
+                } else if (val.id < 0) {
+                    vm.showEvents = val.id === -1;
+                    eventFilter.object = null;
                 }
-                vm.showEvents = val != null;
-                eventFilter.object = val;
             }
             filterEvents();
             markSelected();
@@ -102,6 +105,7 @@
         }
 
         function onViewChange(view) {
+            loadReservations(view.start, view.end);
             if ('month'.indexOf(view.name) >= 0) {
                 _.merge(vm.config, {
                     defaultView: 'month',
@@ -129,14 +133,22 @@
                 vm.events[0].pop();
             }
 
-            var aviableObjects = [];
-            if (eventFilter.object != null) {
-                aviableObjects = ReservationService.getForObject(eventFilter.object);
+            if (vm.showEvents) {
+                var reservations;
+                if (eventFilter.object == null) {
+                    reservations = ReservationService.getAll();
+                } else {
+                    reservations = ReservationService.getForObject(eventFilter.object);
+                }
+                _(reservations).forEach(function (o) {
+                    vm.events[0].push(o);
+                });
             }
+        }
 
-            for (var i = 0; i < aviableObjects.length; i++) {
-                vm.events[0].push(aviableObjects[i]);
-            }
+        function loadReservations(start, end) {
+            ReservationService.loadForTime(start, end)
+                .then(filterEvents);
         }
     }
 })();

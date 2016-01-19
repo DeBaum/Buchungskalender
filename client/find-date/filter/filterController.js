@@ -9,16 +9,18 @@
         vm.bookingData = bookingDataFactory;
 
         vm.categories = CategoryService.categories;
-        vm.availableObjects = [];
+        vm.availableObjects = [{id: -2, title: 'Keine anzeigen'}, {id: -1, title: 'Alle anzeigen'}];
         vm.matchedObjects = [];
         vm.getCategoryName = _.constant(_.result(_.find(vm.categories, {id: vm.categoryId}), 'title'));
-        vm.object = null;
+        vm.object = vm.availableObjects[0];
         vm.getBookingParams = getBookingParams;
         vm.onFilterChanged = onFilterChanged;
 
         ObjectService.load(vm.bookingData.categoryId)
             .then(function (objectsInCategory) {
-                vm.availableObjects = objectsInCategory;
+                _(objectsInCategory).forEach(function (o) {
+                    vm.availableObjects.push(o);
+                });
             });
 
         ////////////

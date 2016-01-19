@@ -9,16 +9,17 @@
             getAviableObjects: getAviableObjects,
             getForObject: getReservationsForObject,
             getById: getReservationById,
+            getAll: function () {return service.reservations},
             load: loadReservation,
-            loadForObject: loadForObject
+            loadForTime: loadForTime
         };
         return service;
 
         //////////
 
-        function loadForObject(objectId) {
+        function loadForTime(from, to) {
             return $q(function (resolve) {
-                ReservationR.getAll({object_id: objectId}, function (objects) {
+                ReservationR.getAll({from: from, to: to, category_id: $stateParams.categoryId}, function (objects) {
                     _.forEach(objects, insertReservation);
                     resolve(objects);
                 });

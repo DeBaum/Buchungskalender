@@ -43,7 +43,7 @@
             else id = category.id;
 
             if (id == null) return [];
-            return _.filter(service.objects, {categoryId: id});
+            return _.filter(service.objects, {category_id: id});
         }
 
         function getObjectName(object) {

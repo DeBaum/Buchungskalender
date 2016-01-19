@@ -20,6 +20,7 @@ require_once __DIR__ . '/routes/routes.php';
 require_once __DIR__ . '/routes/routes-validations.php';
 require_once __DIR__ . '/../extras/ExtraHandler.php';
 require_once __DIR__ . '/../help/BasicEnum.php';
+require_once __DIR__ . '/../help/BookingsHelper.php';
 
 // Controllers
 require_once __DIR__ . './controllers/BaseController.php';
@@ -40,6 +41,7 @@ require_once __DIR__ . '/models/ExtraWithType.php';
 // Extras
 require_once __DIR__ . '/../extras/BaseExtra.php';
 require_once __DIR__ . '/../extras/SelectionExtra.php';
+require_once __DIR__ . '/../extras/FlagExtra.php';
 require_once __DIR__ . '/../extras/forms/fields/BaseField.php';
 require_once __DIR__ . '/../extras/forms/fields/SelectField.php';
 

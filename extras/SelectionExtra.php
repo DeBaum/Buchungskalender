@@ -27,7 +27,7 @@ class SelectionExtra extends BaseExtra
 
     protected function createDisplayForm()
     {
-        return new SelectField($this->id, InputFieldType::Select, $this->values, $this->config->default);
+        return new SelectField($this, InputFieldType::Select, $this->values);
     }
 
     /**

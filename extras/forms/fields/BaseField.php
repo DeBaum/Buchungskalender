@@ -3,6 +3,7 @@
 namespace extras\forms;
 
 
+use extras\BaseExtra;
 use help\BasicEnum;
 
 abstract class InputFieldType extends BasicEnum
@@ -30,14 +31,20 @@ abstract class BaseField
     public $type;
 
     /**
-     * @param $id int Extra identifier
+     * @var string Display title
+     */
+    public $title;
+
+    /**
+     * @param BaseExtra $extra Extra
      * @param string $type Form type
      */
-    public function __construct($id, $type)
+    public function __construct(BaseExtra $extra, $type)
     {
-        if (!InputFieldType::isValidName($type))
-            throw new \InvalidArgumentException("unknown type");
-        $this->id = $id;
+        if (!InputFieldType::isValidValue($type))
+            throw new \InvalidArgumentException("unknown field type: `$type`");
+        $this->id = $extra->id;
         $this->type = $type;
+        $this->title = $extra->title;
     }
 }

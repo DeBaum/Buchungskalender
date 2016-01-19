@@ -144,11 +144,20 @@ class ReservationController extends BaseController
         }
 
         $rows = $this->updateAll(
-            "UPDATE bookings_reservation SET time_from = ",
-            array($resource->category_id, $resource->title, $resource->quantity, $resource->id));
+            "UPDATE bookings_reservation SET time_from = :s, time_to = :s, event_from = :s, event_to = :s, quantity = :d
+             WHERE id = :d",
+            array(
+                $reservation->time_from,
+                $reservation->time_to,
+                $reservation->event_from,
+                $reservation->event_to,
+                $reservation->quantity,
+                $reservation->id
+            )
+        );
 
         if ($rows > 0) {
-            returnResult($resource);
+            returnResult($reservation);
         } else {
             returnSlimError(GlobalErrors::$NOTHING_CHANGED);
         }

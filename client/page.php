@@ -1,13 +1,10 @@
 <?php
 
-register_activation_hook(WP_PLUGIN_DIR . '/Buchungskalender/Buchungskalender.php', 'bk_install');
-register_deactivation_hook(WP_PLUGIN_DIR . '/Buchungskalender/Buchungskalender.php', 'bk_remove');
-
 add_action('delete_post', 'bk_preventSiteDelete');
 add_action('save_post', 'bk_preventSiteModification');
 add_action('trashed_post', 'bk_preventSiteTrash');
 
-function bk_install() {
+function add_page_on_install() {
 	$page_title = 'Buchungskalender';
 	$page_slug = 'buchungskalender';
 
@@ -26,7 +23,7 @@ function bk_install() {
 	}
 }
 
-function bk_remove() {
+function delete_page_on_remove() {
 	$page_id = get_option('bk_page_id');
 
 	delete_option('bk_PageTitle');

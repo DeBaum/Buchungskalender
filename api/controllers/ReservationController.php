@@ -3,6 +3,7 @@
 namespace Bookings\Controller;
 
 
+use api\models\ReservationExtra;
 use Bookings\GlobalErrors;
 use Bookings\Models\Reservation;
 use function Bookings\returnResult;
@@ -38,6 +39,9 @@ class ReservationController extends BaseController
             return returnSlimError(GlobalErrors::$INVALID_REQUEST, "quantity exceeded (" . ($reservedQuantity + $reservation->quantity) . "/" . $maxQuantity . ")", null);
         }
 
+        $this->validateExtras($reservation->extras);
+
+        $this->startTransaction(); // TODO Use a transaction (currently not working!)
         $inserted_id = $this->insert(
             "INSERT INTO bookings_reservation(resource_id, time_from, time_to, creator_id, event_from, event_to, quantity) " .
             "VALUES (:d, :s, :s, :d, :s, :s, :d)",
@@ -50,12 +54,18 @@ class ReservationController extends BaseController
                 $reservation->event_to,
                 $reservation->quantity
             ));
-
         if ($inserted_id > 0) {
-            returnResult($this->get($inserted_id));
-        } else {
-            returnSlimError(GlobalErrors::$NOTHING_CHANGED);
+            $reservation->id = $inserted_id;
+            if (ExtraController::getInstance()->syncReservationExtras($reservation, null) === true) {
+                $this->commit();
+                returnResult($this->get($inserted_id));
+                return true;
+            }
         }
+
+        $this->rollback();
+        returnSlimError(GlobalErrors::$INTERNAL_ERROR);
+        return false;
     }
 
     /**
@@ -66,20 +76,33 @@ class ReservationController extends BaseController
      * @param $from
      * @param $to
      *
+     * @param null $ignoredReservationId If set reservations with this Id will be ignored
      * @return array|null|object
      */
-    public function getReservedObjectsByTime($resourceId, $from, $to)
+    public function getReservedObjectsByTime($resourceId, $from, $to, $ignoredReservationId = null)
     {
-        return $this->fetchAll("SELECT SUM(quantity) AS quantity FROM bookings_reservation WHERE resource_id = :d AND :s < time_to AND :s > time_from", array(
+        $query = "SELECT SUM(quantity) AS quantity FROM bookings_reservation WHERE resource_id = :d AND :s < time_to AND :s > time_from";
+        $args = array(
             $resourceId,
             $from,
             $to
-        ));
+        );
+        if ($ignoredReservationId !== null) {
+            $query .= " AND reservation_id != :d";
+            array_push($args, $ignoredReservationId);
+        }
+        return $this->fetchAll($query, $args);
     }
 
     public function get($id)
     {
-        return Reservation::fromDb($this->fetchOne("SELECT * FROM bookings_reservation WHERE id = :d", $id));
+        $extraController = ExtraController::getInstance();
+        $reservation = Reservation::fromDb($this->fetchOne("SELECT * FROM bookings_reservation WHERE id = :d", $id));
+        if ($reservation === null) {
+            return returnSlimError(GlobalErrors::$RESOURCE_NOT_FOUND);
+        }
+        $reservation->extras = $extraController->getReservationExtras($reservation->id);
+        return $reservation;
     }
 
     public function getAll()
@@ -100,13 +123,16 @@ class ReservationController extends BaseController
             return returnSlimError(GlobalErrors::$INVALID_REQUEST, "resource not found", null);
         }
 
-        $reservation = array();
+        $extraController = ExtraController::getInstance();
+        $reservations = array();
         foreach ($this->fetchAll("SELECT * FROM bookings_reservation WHERE resource_id = :d AND :s <= time_to AND :s >= time_from",
             [$resourceId, $from, $to]) as $row) {
-            array_push($reservation, Reservation::fromDb($row));
+            $reservation = Reservation::fromDb($row);
+            $reservation->extras = $extraController->getReservationExtras($reservation->id);
+            array_push($reservations, $reservation);
         }
 
-        return $reservation;
+        return $reservations;
     }
 
     // Helper
@@ -135,7 +161,7 @@ class ReservationController extends BaseController
         }
 
         // check overlapping
-        $result = $this->getReservedObjectsByTime($resource->id, $reservation->time_from, $reservation->time_to);
+        $result = $this->getReservedObjectsByTime($resource->id, $reservation->time_from, $reservation->time_to, $reservation->id);
         $reservedQuantity = $result[0]->quantity;
         $maxQuantity = $resource->quantity;
 
@@ -143,6 +169,9 @@ class ReservationController extends BaseController
             return returnSlimError(GlobalErrors::$INVALID_REQUEST, "quantity exceeded (" . ($reservedQuantity + $reservation->quantity) . "/" . $maxQuantity . ")", null);
         }
 
+        $this->validateExtras($reservation->extras);
+
+        $this->startTransaction();
         $rows = $this->updateAll(
             "UPDATE bookings_reservation SET time_from = :s, time_to = :s, event_from = :s, event_to = :s, quantity = :d
              WHERE id = :d",
@@ -156,10 +185,28 @@ class ReservationController extends BaseController
             )
         );
 
-        if ($rows > 0) {
-            returnResult($reservation);
-        } else {
-            returnSlimError(GlobalErrors::$NOTHING_CHANGED);
+        if ($rows !== false) {
+            if (ExtraController::getInstance()->syncReservationExtras($reservation, $existingReservation) === true) {
+                $this->commit();
+                returnResult($reservation);
+                return true;
+            }
         }
+
+        $this->rollback();
+        returnSlimError(GlobalErrors::$INTERNAL_ERROR);
+        return false;
+    }
+
+    /**
+     * Validates a list of Extras.
+     *
+     * @param ReservationExtra[] $extras List of ReservationExtras
+     * @return bool If the list of Extras is valid.
+     */
+    private function validateExtras($extras)
+    {
+        // TODO Validation
+        return true;
     }
 }

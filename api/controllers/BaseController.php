@@ -91,6 +91,21 @@ abstract class BaseController
         return $this->db->insert_id;
     }
 
+    protected function startTransaction()
+    {
+        $this->db->query("START TRANSACTION");
+    }
+
+    protected function commit()
+    {
+        $this->db->query("COMMIT");
+    }
+
+    protected function rollback()
+    {
+        $this->db->query("ROLLBACK");
+    }
+
     // region Request Helper
     protected function getSlim()
     {

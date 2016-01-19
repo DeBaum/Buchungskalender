@@ -41,6 +41,7 @@ require_once __DIR__ . '/models/ExtraWithType.php';
 // Extras
 require_once __DIR__ . '/../extras/BaseExtra.php';
 require_once __DIR__ . '/../extras/SelectionExtra.php';
+require_once __DIR__ . '/../extras/FlagExtra.php';
 require_once __DIR__ . '/../extras/forms/fields/BaseField.php';
 require_once __DIR__ . '/../extras/forms/fields/SelectField.php';
 

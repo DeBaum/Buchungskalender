@@ -41,7 +41,7 @@ class ReservationController extends BaseController
 
         $this->validateExtras($reservation->extras);
 
-        $this->startTransaction(); // TODO Use a transaction (currently not working!)
+        $this->startTransaction();
         $inserted_id = $this->insert(
             "INSERT INTO bookings_reservation(resource_id, time_from, time_to, creator_id, event_from, event_to, quantity) " .
             "VALUES (:d, :s, :s, :d, :s, :s, :d)",

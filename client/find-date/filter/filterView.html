@@ -8,7 +8,6 @@
                 <div class="col-sm-8">
                     <select id="resource" class="form-control" ng-change="filter.onFilterChanged('object', filter.object)"
                         ng-options="o as o.title for o in filter.availableObjects track by o.id" ng-model="filter.object">
-                        <option value="">-- Alle --</option>
                     </select>
                 </div>
             </div>

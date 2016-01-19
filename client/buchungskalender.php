@@ -56,6 +56,7 @@ function npmSrc($module_rel_path) {
 
 <link rel="stylesheet" href="<?php npmSrc('fullcalendar/dist/fullcalendar.min.css') ?>">
 <link rel="stylesheet" href="<?php src('find-date/calendar/ui-calendar-mod.css') ?>">
+<link rel="stylesheet" href="<?php src('category-selection/categoryView.css') ?>">
 <link rel="stylesheet" href="<?php src('find-date/find-date.css') ?>">
 <link rel="stylesheet" href="<?php src('book-object/book-object.css') ?>">
 <link rel="stylesheet" href="<?php src('find-date/filter/filterView.css') ?>">

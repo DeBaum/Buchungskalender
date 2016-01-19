@@ -9,9 +9,12 @@
             getAviableObjects: getAviableObjects,
             getForObject: getReservationsForObject,
             getById: getReservationById,
-            getAll: function () {return service.reservations},
+            getAll: function () {
+                return service.reservations
+            },
             load: loadReservation,
-            loadForTime: loadForTime
+            loadForTime: loadForTime,
+            save: saveReservation
         };
         return service;
 
@@ -27,15 +30,18 @@
         }
 
         function loadReservation(id) {
-            var fn = ReservationR.get;
-            if (!id) {
-                fn = ReservationR.getAll;
-            }
-            fn({id: id}, function (reservations) {
-                if (!_.isArray(reservations)) {
-                    reservations = [reservations];
+            return $q(function (resolve) {
+                var fn = ReservationR.get;
+                if (!id) {
+                    fn = ReservationR.getAll;
                 }
-                _.forEach(reservations, insertReservation);
+                fn({id: id}, function (reservations) {
+                    if (!_.isArray(reservations)) {
+                        reservations = [reservations];
+                    }
+                    _.forEach(reservations, insertReservation);
+                    resolve(id ? reservations[0] : reservations);
+                });
             });
         }
 
@@ -69,6 +75,16 @@
             return _.filter(service.reservations, function (reservation) {
                 return reservation.object.id == object.id;
             })
+        }
+
+        function saveReservation(reservation) {
+            return $q(function (resolve) {
+                if (reservation.id) {
+                    ReservationR.update(reservation, resolve);
+                } else {
+                    ReservationR.create(reservation, resolve);
+                }
+            });
         }
     }
 })();

@@ -12,6 +12,8 @@
         vm.getForms = getForms;
         vm.getSelectDefault = getSelectDefault;
         vm.getAll = getAll;
+        vm.getForBooking = getBookingObject;
+        vm.extrasValues = [];
 
         setDefaults();
         $scope.$watch('booking.bookingData.objectId', loadExtras);
@@ -28,6 +30,17 @@
         function loadExtras(objectId) {
             ObjectResource.getExtras({id: objectId}, function (objectExtras) {
                 extras = objectExtras;
+                setExtrasValues(extras);
+            });
+        }
+
+        function setExtrasValues(extras) {
+            vm.extrasValues = [];
+            _(extras).forEach(function (extra) {
+                vm.extrasValues.push({
+                    extra_id: extra.id,
+                    value: extra.default
+                });
             });
         }
 
@@ -52,6 +65,10 @@
 
         function getAll() {
             return extras;
+        }
+
+        function getBookingObject() {
+            return vm.extrasValues;
         }
     }
 })();

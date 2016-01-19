@@ -10,7 +10,7 @@
                 "id": 1,
                 "title": "Sitzordung",
                 "type": "select",
-                "default": 2,//0 = keine auswahl
+                "default": 2,//null = keine auswahl
                 "values": [
                     {"id": 0, "title": "Keine"},
                     {"id": 1, "title": "U-Form"},
@@ -63,7 +63,16 @@
         vm.getSelectDefault = getSelectDefault;
         vm.getAll = getAll;
 
+        setDefaults();
+
         ////////////
+
+        function setDefaults() {
+            _(list)
+                .filter(function (e) {return e.default != null})
+                .map('id')
+                .forEach(function (e) {vm.selectedExtras[e] = true});
+        }
 
         function getFields() {
             return _.filter(list, function (e) {

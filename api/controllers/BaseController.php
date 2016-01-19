@@ -87,7 +87,6 @@ abstract class BaseController
     {
         $parsedQuery = $this->parsePrepare($query);
         $query = $this->db->prepare($parsedQuery, $args);
-        $query = str_replace("''", "NULL", $query); // wp converts nullable strings to ''
         $this->db->query($query);
         return $this->db->insert_id;
     }
@@ -142,6 +141,7 @@ abstract class BaseController
     {
         $sql = str_replace(":d", "%d", $sql);
         $sql = str_replace(":s", "%s", $sql);
+        $sql = str_replace("''", "NULL", $sql); // wp converts nullable strings to ''
         return $sql;
     }
 

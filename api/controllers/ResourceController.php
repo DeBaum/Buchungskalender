@@ -78,4 +78,19 @@ class ResourceController extends BaseController
             returnSlimError(GlobalErrors::$NOTHING_CHANGED);
         }
     }
+
+    public function getExtras($id)
+    {
+        $resource = $this->get($id);
+        if ($resource == null) {
+            return returnSlimError(GlobalErrors::$RESOURCE_NOT_FOUND);
+        }
+
+        $extraController = new ExtraController();
+        $extras = [];
+        foreach ($extraController->getExtrasForResource($resource) as $extra) {
+            array_push($extras, $extra->createDisplayConfig());
+        }
+        return $extras;
+    }
 }

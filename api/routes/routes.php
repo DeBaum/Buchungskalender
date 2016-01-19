@@ -66,6 +66,10 @@ function registerRoutes(Slim $app)
         $app->put('/:id', RouteValidations::$noEmptyBody, RouteValidations::hasRole(UserRole::ADMIN), function ($id) use ($app, $resourceCtrl) {
             $resourceCtrl->update($id, json_decode($app->request->getBody()));
         });
+
+        $app->get('/:id/extras', function ($id) use ($app, $resourceCtrl) {
+            returnResult($resourceCtrl->getExtras($id));
+        });
     });
 
     // Reservation

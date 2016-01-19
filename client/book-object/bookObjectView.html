@@ -30,7 +30,7 @@
         </div>
         <button ng-if="booking.isEditing()" class="btn btn-primary" onclick="alert('Buchung!'); ">Speichern</button>
         <button ng-if="!booking.isEditing()" class="btn btn-primary" onclick="alert('Gespeichert!'); ">Absenden</button>
-        <button class="btn btn-default" ui-sref="find-date({categoryId: bookingData.categoryId})">Abbrechen</button>
+        <button class="btn btn-default" ui-sref="find-date({categoryId: booking.bookingData.categoryId})">Abbrechen</button>
     </div>
     <div class="col-sm-8">
         <div class="panel panel-default">

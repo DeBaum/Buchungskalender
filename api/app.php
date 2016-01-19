@@ -9,6 +9,8 @@ use function Bookings\Routes\registerRoutes;
 define('BOOKINGS_APP_ROOT', __DIR__);
 define('BOOKINGS_DEBUG', true);
 
+// TODO Load dependencies dynamically
+
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../config.php';
 require_once __DIR__ . '/help/result-handler.php';

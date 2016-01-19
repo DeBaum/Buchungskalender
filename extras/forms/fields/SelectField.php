@@ -2,6 +2,7 @@
 
 namespace extras\forms;
 
+use extras\BaseExtra;
 use extras\SelectOption;
 
 /**
@@ -24,15 +25,14 @@ class SelectField extends BaseField
     /**
      * SelectField constructor.
      *
-     * @param int $id Extra identifier
+     * @param BaseExtra $extra Extra
      * @param string $type Type
      * @param SelectOption[] $values Options for this field
-     * @param bool|null $default Marks the default option
      */
-    public function __construct($id, $type, $values, $default = null)
+    public function __construct(BaseExtra $extra, $type, $values)
     {
-        parent::__construct($id, $type);
+        parent::__construct($extra, $type);
         $this->values = $values;
-        $this->default = $default;
+        $this->default = $extra->default;
     }
 }

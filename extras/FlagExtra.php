@@ -15,8 +15,6 @@ use extras\forms\InputFieldType;
  */
 class FlagExtra extends BaseExtra
 {
-    public $default;
-
     public function __construct($id, $title, $typeId, $config)
     {
         parent::__construct($id, $title, $typeId);
@@ -29,7 +27,7 @@ class FlagExtra extends BaseExtra
 
     protected function createDisplayForm()
     {
-        return new CheckboxField($this->id, InputFieldType::Checkbox, $this->default);
+        return new CheckboxField($this, InputFieldType::Checkbox);
     }
 
     /**

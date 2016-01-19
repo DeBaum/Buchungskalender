@@ -2,6 +2,8 @@
 
 namespace extras\forms;
 
+use extras\BaseExtra;
+
 include_once __DIR__ . '/../fields/BaseField.php';
 
 /**
@@ -19,13 +21,12 @@ class CheckboxField extends BaseField
     /**
      * SelectField constructor.
      *
-     * @param int $id Extra identifier
+     * @param BaseExtra $extra
      * @param string $type Type
-     * @param bool|null $default Marks the default option
      */
-    public function __construct($id, $type, $default = null)
+    public function __construct(BaseExtra $extra, $type)
     {
-        parent::__construct($id, $type);
-        $this->default = $default;
+        parent::__construct($extra, $type);
+        $this->default = $extra->default;
     }
 }

@@ -2,60 +2,10 @@
     angular.module('bkClient')
         .controller('ExtrasController', ExtrasController);
 
-    ExtrasController.$inject = [];
-    function ExtrasController() {
+    ExtrasController.$inject = ['ObjectResource', '$scope'];
+    function ExtrasController(ObjectResource, $scope) {
         var vm = this;
-        var list = [
-            {
-                "id": 1,
-                "title": "Sitzordung",
-                "type": "select",
-                "default": 2,//null = keine auswahl
-                "values": [
-                    {"id": 0, "title": "Keine"}, //id <= 0 keine Auswahl
-                    {"id": 1, "title": "U-Form"},
-                    {"id": 2, "title": "T-Form"}
-                ]
-            },
-            {
-                "id": 7,
-                "title": "Bewirtung",
-                "type": "form",
-                "default": true,
-                "subfields": [
-                    {"type": "text", "title": "Fachbereich", "name": "fb", "default": "FB7"},
-                    {"type": "text", "title": "Buget", "name": "buget"},
-                    {"type": "text", "title": "Konto", "name": "konto"},
-                    {"type": "text", "title": "Kostenstelle", "name": "kostenstelle"},
-                    {"type": "textarea", "title": "Speisen/Getränke", "name": "speisen"},
-                    {"type": "text", "title": "Personen", "name": "persons"}
-                ]
-            },
-            {
-                "id": 12,
-                "title": "Anzeige Infotafel",
-                "type": "check"
-            },
-            {
-                "id": 14,
-                "title": "Externer Internetzugang",
-                "type": "check"
-            },
-            {
-                "id": 13,
-                "title": "Eventzeit",
-                "type": "form",
-                "subfields": [
-                    {"type": "text", "title": "Start", "name": "time_start"},
-                    {"type": "text", "title": "Ende", "name": "Time_stop"}
-                ]
-            },
-            {
-                "id": 18,
-                "title": "Beschreibung",
-                "type": "textarea"
-            }
-        ];
+        var extras = [];
 
         vm.selectedExtras = {};
         vm.getFields = getFields;
@@ -64,24 +14,31 @@
         vm.getAll = getAll;
 
         setDefaults();
+        $scope.$watch('booking.bookingData.objectId', loadExtras);
 
         ////////////
 
         function setDefaults() {
-            _(list)
+            _(extras)
                 .filter(function (e) {return e.default != null})
                 .map('id')
                 .forEach(function (e) {vm.selectedExtras[e] = true});
         }
 
+        function loadExtras(objectId) {
+            ObjectResource.getExtras({id: objectId}, function (objectExtras) {
+                extras = objectExtras;
+            });
+        }
+
         function getFields() {
-            return _.filter(list, function (e) {
+            return _.filter(extras, function (e) {
                 return e.type != 'form';
             });
         }
 
         function getForms() {
-            return _.filter(list, function (e) {
+            return _.filter(extras, function (e) {
                 return e.type == 'form';
             });
         }
@@ -94,7 +51,7 @@
         }
 
         function getAll() {
-            return list;
+            return extras;
         }
     }
 })();

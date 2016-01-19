@@ -9,11 +9,8 @@
             'getAll': {method: 'get', params: {id: null}, isArray: true, cache: true},
             'get': {method: 'get', cache: true},
             'update': {method: 'put'},
-            'delete': {method: 'delete'}
+            'delete': {method: 'delete'},
+            'getExtras': {method: 'get', url: bkApiRoot + '/resources/:id/extras', isArray: true, cache: true}
         });
-
-        //////////
-
-
     }
 })();

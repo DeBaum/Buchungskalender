@@ -70,8 +70,6 @@
 
         function dayClicked(date) {
             date.startOf('day').add(8, 'h');
-            bookingDataFactory.start = date.clone();
-            bookingDataFactory.end = date.clone().add(2, 'h');
 
             _.merge(vm.config, {
                 defaultDate: date,
@@ -94,18 +92,13 @@
                 bookingDataFactory.start = start;
                 bookingDataFactory.end = end;
                 $rootScope.$emit('dateSelected');
-            } else {
-                bookingDataFactory.start = start.add(8, 'h');
-                bookingDataFactory.end = end.subtract(6, 'h');
-                bookingDataFactory.start._ambigTime = false;
-                bookingDataFactory.end._ambigTime = false;
-
-                markSelected();
             }
         }
 
         function markSelected() {
-            $('[ui-calendar="cal.config"]').fullCalendar('select', bookingDataFactory.start, bookingDataFactory.end);
+            if (bookingDataFactory.start && bookingDataFactory.end) {
+                $('[ui-calendar="cal.config"]').fullCalendar('select', bookingDataFactory.start, bookingDataFactory.end);
+            }
         }
 
         function onViewChange(view) {
@@ -122,7 +115,7 @@
             } else if ('agendaWeek,agendaDay'.indexOf(view.name) >= 0) {
                 _.merge(vm.config, {
                     defaultView: view.name,
-                    defaultDate: bookingDataFactory.start,
+                    defaultDate: bookingDataFactory.start || vm.config.defaultDate,
                     header: {
                         left: 'month ' + (view.name == 'agendaDay' ? 'agendaWeek' : 'agendaDay')
                     }

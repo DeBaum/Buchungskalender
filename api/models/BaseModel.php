@@ -8,24 +8,14 @@ use help\BookingsHelper;
 
 class BaseModel
 {
-
     protected function isInt($value, $min = 1)
     {
-        if (!is_numeric($value)) {
-            return false;
-        }
-
-        return $value >= $min;
+        return BookingsHelper::isInt($value, $min);
     }
 
     protected function isString($value, $minLength = 1)
     {
-        if ($value == null) {
-            return false;
-        }
-        $value = trim($value);
-
-        return strlen($value) >= $minLength;
+        return BookingsHelper::isString($value, $minLength);
     }
 
     protected function isDate($value)

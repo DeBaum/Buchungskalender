@@ -35,8 +35,8 @@ abstract class BaseField
      */
     public function __construct($id, $type)
     {
-        if (!InputFieldType::isValidName($type))
-            throw new \InvalidArgumentException("unknown type");
+        if (!InputFieldType::isValidValue($type))
+            throw new \InvalidArgumentException("unknown field type: `$type`");
         $this->id = $id;
         $this->type = $type;
     }

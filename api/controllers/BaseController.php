@@ -2,6 +2,7 @@
 
 namespace Bookings\Controller;
 
+use help\BookingsHelper;
 use Slim\Slim;
 use wpdb;
 
@@ -132,7 +133,7 @@ abstract class BaseController
 
     protected function isDate($value)
     {
-        return strtotime($value) !== false;
+        return BookingsHelper::isDate($value);
     }
 
     // endregion

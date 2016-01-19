@@ -20,6 +20,7 @@ require_once __DIR__ . '/routes/routes.php';
 require_once __DIR__ . '/routes/routes-validations.php';
 require_once __DIR__ . '/../extras/ExtraHandler.php';
 require_once __DIR__ . '/../help/BasicEnum.php';
+require_once __DIR__ . '/../help/BookingsHelper.php';
 
 // Controllers
 require_once __DIR__ . './controllers/BaseController.php';

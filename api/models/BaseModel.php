@@ -4,6 +4,8 @@
 namespace Bookings\Models;
 
 
+use help\BookingsHelper;
+
 class BaseModel
 {
 
@@ -28,6 +30,6 @@ class BaseModel
 
     protected function isDate($value)
     {
-        return true; // TODO
+        return BookingsHelper::isDate($value);
     }
 }

@@ -12,7 +12,7 @@
                 "type": "select",
                 "default": 2,//null = keine auswahl
                 "values": [
-                    {"id": 0, "title": "Keine"},
+                    {"id": 0, "title": "Keine"}, //id <= 0 keine Auswahl
                     {"id": 1, "title": "U-Form"},
                     {"id": 2, "title": "T-Form"}
                 ]

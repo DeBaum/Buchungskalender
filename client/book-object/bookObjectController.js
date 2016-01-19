@@ -2,40 +2,35 @@
     angular.module('bkClient')
         .controller('BookObjectController', BookObjectController);
 
-    BookObjectController.$inject = ['$scope', 'bookingDataFactory', 'ObjectService', '$state'];
-    function BookObjectController($scope, bookingDataFactory, ObjectService, $state) {
+    BookObjectController.$inject = ['bookingDataFactory', 'ObjectService', '$state'];
+    function BookObjectController(bookingDataFactory, ObjectService, $state) {
         bookingDataFactory.update();
 
-        $scope.bookingData = bookingDataFactory;
+        var vm = this;
+        vm.bookingData = bookingDataFactory;
 
-        $scope.time = {
+        vm.time = {
             start: bookingDataFactory.start,
             end: bookingDataFactory.end
         };
 
-        $scope.$watch('event.before', setEventTimeStr);
-        $scope.$watch('event.after', setEventTimeStr);
+        vm.objects = ObjectService.getForCategory(vm.bookingData.categoryId);
+        vm.object = _.find(vm.objects, {id: bookingDataFactory.objectId});
 
-        $scope.objects = ObjectService.getForCategory(bookingDataFactory.categoryId);
-        $scope.object = _.find($scope.objects, {id: bookingDataFactory.objectId});
+        vm.isEditing = isEditing;
 
-        $scope.isEditing = isEditing;
+        ObjectService.load(bookingDataFactory.categoryId)
+            .then(setSelectedObject);
 
         ////////////
 
-        function isEditing() {
-            return $state.is('edit-reservation');
+        function setSelectedObject(objects) {
+            vm.objects = objects || vm.object;
+            vm.object = _.find(objects, {id: bookingDataFactory.objectId});
         }
 
-        function setEventTimeStr() {
-            if ($scope.event) {
-                if ($scope.time.start) {
-                    $scope.event.beforeStr = $scope.time.start.clone().add($scope.event.before, 'm').format('H:mm');
-                }
-                if ($scope.time.end) {
-                    $scope.event.afterStr = $scope.time.end.clone().subtract($scope.event.after, 'm').format('H:mm');
-                }
-            }
+        function isEditing() {
+            return $state.is('edit-reservation');
         }
     }
 })();

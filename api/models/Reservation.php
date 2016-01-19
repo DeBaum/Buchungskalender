@@ -3,9 +3,12 @@
 namespace Bookings\Models;
 
 
+include_once __DIR__ . "/ReservationExtra.php";
+
+use api\models\ReservationExtra;
+
 class Reservation extends BaseModel
 {
-
     /**
      * Unique identifier
      * If zero the object was not stored before
@@ -21,7 +24,25 @@ class Reservation extends BaseModel
     public $event_to;
     public $quantity;
 
-    public function __construct($id, $resourceId, $timeFrom, $timeTo, $creatorId, $creationTime, $eventFrom, $eventTo, $quantity)
+    /**
+     * @var ReservationExtra[] Extras
+     */
+    public $extras;
+
+    /**
+     * Reservation constructor.
+     * @param int $id
+     * @param int $resourceId
+     * @param string $timeFrom
+     * @param string $timeTo
+     * @param int $creatorId
+     * @param string $creationTime
+     * @param string $eventFrom
+     * @param string $eventTo
+     * @param int $quantity
+     * @param ReservationExtra[] $extras
+     */
+    public function __construct($id, $resourceId, $timeFrom, $timeTo, $creatorId, $creationTime, $eventFrom, $eventTo, $quantity, $extras)
     {
         if ($id === null) {
             $id = 0;
@@ -38,6 +59,9 @@ class Reservation extends BaseModel
         }
         if (!$this->isInt($quantity, 1)) {
             throw new \InvalidArgumentException("missing or invalid quantity");
+        }
+        if ($extras !== null && !is_array($extras)) {
+            throw new \InvalidArgumentException("reservation extras must be an array");
         }
 
         if ($isNew) {
@@ -57,20 +81,25 @@ class Reservation extends BaseModel
         $this->event_from = $eventFrom;
         $this->event_to = $eventTo;
         $this->quantity = $this->isInt($quantity) ? $quantity : 1;
+        $this->extras = $extras;
     }
 
     public static function fromJson($json)
     {
-        return Reservation::fromDb($json);
+        $extras = [];
+        foreach ($json->extras as $extra) {
+            array_push($extras, new ReservationExtra($extra->extra_id, $extra->value));
+        }
+        return Reservation::fromDb($json, $extras);
     }
 
-    public static function fromDb($row)
+    public static function fromDb($row, $extras = null)
     {
         if ($row == null) {
             return null;
         }
 
         return new Reservation(intval($row->id), intval($row->resource_id), $row->time_from, $row->time_to, intval($row->creator_id),
-            $row->creation_time, $row->event_from, $row->event_to, intval($row->quantity));
+            $row->creation_time, $row->event_from, $row->event_to, intval($row->quantity), $extras);
     }
 }

@@ -35,7 +35,7 @@ function registerRoutes(Slim $app)
         });
 
         $app->get('/:id', function ($id) use ($app, $categoryCtrl) {
-            returnResultWithNotFound($categoryCtrl->get($id));
+            returnResultWithNotFound($categoryCtrl->get(intval($id)));
         });
 
         $app->get('/', function () use ($app, $categoryCtrl) {
@@ -43,7 +43,7 @@ function registerRoutes(Slim $app)
         });
 
         $app->put('/:id', RouteValidations::$noEmptyBody, RouteValidations::hasRole(UserRole::ADMIN), function ($id) use ($app, $categoryCtrl) {
-            $categoryCtrl->update($id, json_decode($app->request->getBody()));
+            $categoryCtrl->update(intval($id), json_decode($app->request->getBody()));
         });
     });
 
@@ -56,7 +56,7 @@ function registerRoutes(Slim $app)
         });
 
         $app->get('/:id', function ($id) use ($app, $resourceCtrl) {
-            returnResultWithNotFound($resourceCtrl->get($id));
+            returnResultWithNotFound($resourceCtrl->get(intval($id)));
         });
 
         $app->get('/', function () use ($app, $resourceCtrl) {
@@ -64,11 +64,11 @@ function registerRoutes(Slim $app)
         });
 
         $app->put('/:id', RouteValidations::$noEmptyBody, RouteValidations::hasRole(UserRole::ADMIN), function ($id) use ($app, $resourceCtrl) {
-            $resourceCtrl->update($id, json_decode($app->request->getBody()));
+            $resourceCtrl->update(intval($id), json_decode($app->request->getBody()));
         });
 
         $app->get('/:id/extras', function ($id) use ($app, $resourceCtrl) {
-            returnResult($resourceCtrl->getExtras($id));
+            returnResult($resourceCtrl->getExtras(intval($id)));
         });
     });
 
@@ -81,7 +81,7 @@ function registerRoutes(Slim $app)
         });
 
         $app->get('/:id', function ($id) use ($app, $reservationCtrl) {
-            returnResultWithNotFound($reservationCtrl->get($id));
+            returnResultWithNotFound($reservationCtrl->get(intval($id)));
         });
 
         $app->get('/', function () use ($app, $reservationCtrl) {
@@ -89,7 +89,7 @@ function registerRoutes(Slim $app)
         });
 
         $app->put('/:id', RouteValidations::$noEmptyBody, RouteValidations::hasRole(UserRole::ADMIN), function ($id) use ($app, $reservationCtrl) {
-            $reservationCtrl->update($id, json_decode($app->request->getBody()));
+            $reservationCtrl->update(intval($id), json_decode($app->request->getBody()));
         });
     });
 

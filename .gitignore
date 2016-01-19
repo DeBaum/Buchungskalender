@@ -1,6 +1,7 @@
 .idea/workspace.xml
 
-/client/tmp
+client/tmp
+.idea/dataSources.*
 
 # npm
 node_modules

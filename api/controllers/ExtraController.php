@@ -139,7 +139,7 @@ class ExtraController extends BaseController
         foreach ($extrasToUpdate as $extra) {
             if ($this->updateAll("UPDATE bookings_extra_to_reservation SET extra_data = :s
                               WHERE reservation_id = :d AND extra_id = :d",
-                    [$newExtra->value, $reservaton->id, $extra->extra_id]) === false
+                    [$extra->value, $reservaton->id, $extra->extra_id]) === false
             ) {
                 return false;
             };

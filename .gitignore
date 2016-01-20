@@ -11,7 +11,7 @@ vendor/**
 composer.lock
 
 # not exlude used dependencies
-# when using npm or composer add ued files below
+# when using npm or composer add used files below
 # for simpler git checkout without aditional software
 !node_modules/angular/angular.*js
 !node_modules/angular-animate/angular-animate.*js

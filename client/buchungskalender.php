@@ -18,6 +18,8 @@ function npmSrc($module_rel_path) {
 	var bkApiRoot = '<?php getApiRoot() ?>';
 </script>
 
+
+<!-- when adding npm-dependencies: include in .gitignore -->
 <script src="<?php npmSrc('lodash/dist/lodash.min.js') ?>"></script>
 <script src="<?php npmSrc('angular/angular.min.js') ?>"></script>
 <script src="<?php npmSrc('angular-animate/angular-animate.min.js') ?>"></script>
@@ -27,6 +29,7 @@ function npmSrc($module_rel_path) {
 	$.cookie = $.cookie || _.noop;
 </script>
 
+<!-- when adding npm-dependencies: include in .gitignore -->
 <script src="<?php npmSrc('moment/min/moment-with-locales.min.js') ?>"></script>
 <script src="<?php npmSrc('moment-range/dist/moment-range.min.js') ?>"></script>
 <script src="<?php npmSrc('fullcalendar/dist/fullcalendar.min.js') ?>"></script>

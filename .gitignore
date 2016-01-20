@@ -24,3 +24,4 @@ composer.lock
 !node_modules/moment-range/dist/moment-range.*js
 
 !vendor/slim/slim/Slim/**
+!vendor/composer/

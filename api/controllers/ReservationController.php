@@ -106,9 +106,16 @@ class ReservationController extends BaseController
 
     public function getAll()
     {
-        $resourceId = $this->getParam("resource_id");
-        if (!$this->isInt($resourceId, 1))
-            return returnSlimError(GlobalErrors::$INVALID_REQUEST, "missing resource_id", null);
+        $resourceId = intval($this->getParam("resource_id"));
+        $categoryId = intval($this->getParam("category_id"));
+        $findyByResource = $this->isInt($resourceId, 1);
+        $findByCategory = $this->isInt($categoryId, 1);
+        if ($findyByResource === $findByCategory) {
+            if ($findyByResource)
+                return returnSlimError(GlobalErrors::$INVALID_REQUEST, "provide resource_id OR category_id", null);
+            else
+                return returnSlimError(GlobalErrors::$INVALID_REQUEST, "missing resource_id OR category_id", null);
+        }
         $from = $this->getParam("from");
         if (!$this->isDate($from))
             return returnSlimError(GlobalErrors::$INVALID_REQUEST, "missing from parameter", null);
@@ -116,16 +123,30 @@ class ReservationController extends BaseController
         if (!$this->isDate($to))
             return returnSlimError(GlobalErrors::$INVALID_REQUEST, "missing to parameter", null);
 
-        $resourceController = new ResourceController();
-        $resource = $resourceController->get($resourceId);
-        if ($resource == null) {
-            return returnSlimError(GlobalErrors::$INVALID_REQUEST, "resource not found", null);
-        }
+        if ($findyByResource) {
+            $resourceController = new ResourceController();
+            $resource = $resourceController->get($resourceId);
+            if ($resource === null) {
+                return returnSlimError(GlobalErrors::$INVALID_REQUEST, "resource not found", null);
+            }
+            $rows = $this->fetchAll("SELECT * FROM bookings_reservation WHERE resource_id = :d AND :s <= time_to AND :s >= time_from",
+                [$resourceId, $from, $to]);
+        } else if ($findByCategory) {
+            $categoryController = new CategoryController();
+            $category = $categoryController->get($categoryId);
+            if ($category === null) {
+                return returnSlimError(GlobalErrors::$INVALID_REQUEST, "category not found", null);
+            }
+            $rows = $this->fetchAll("SELECT * FROM bookings_reservation
+                                     WHERE resource_id IN
+                                       (SELECT resource_id FROM bookings_resource WHERE category_id = :d)
+                                     AND :s <= time_to AND :s >= time_from",
+                [$category->id, $from, $to]);
+        } else return returnSlimError(GlobalErrors::$INTERNAL_ERROR);
 
-        $extraController = ExtraController::getInstance();
         $reservations = array();
-        foreach ($this->fetchAll("SELECT * FROM bookings_reservation WHERE resource_id = :d AND :s <= time_to AND :s >= time_from",
-            [$resourceId, $from, $to]) as $row) {
+        $extraController = ExtraController::getInstance();
+        foreach ($rows as $row) {
             $reservation = Reservation::fromDb($row);
             $reservation->extras = $extraController->getReservationExtras($reservation->id);
             array_push($reservations, $reservation);

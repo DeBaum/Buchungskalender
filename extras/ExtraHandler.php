@@ -3,6 +3,12 @@
 namespace extras;
 
 
+/**
+ * Represents a manager for Extras that resolves
+ * specific Extras based on their types.
+ *
+ * @package extras
+ */
 class ExtraHandler
 {
     // TODO: implement instance cache
@@ -11,10 +17,8 @@ class ExtraHandler
 
     public function getExtra($id, $title, $typeId, $fieldClass, $config)
     {
-        /**
-         * @var BaseExtra $instance
-         */
-        $instance = "\\extras\\$fieldClass";
+        /** @var BaseExtra $instance */
+        $instance = "\\extras\\$fieldClass"; // TODO validate class?
         return $instance::fromDb($id, $title, $typeId, $config);
     }
 

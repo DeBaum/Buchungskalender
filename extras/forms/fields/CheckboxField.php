@@ -2,6 +2,7 @@
 
 namespace extras\forms;
 
+
 use extras\BaseExtra;
 
 include_once __DIR__ . '/../fields/BaseField.php';
@@ -13,9 +14,7 @@ include_once __DIR__ . '/../fields/BaseField.php';
  */
 class CheckboxField extends BaseField
 {
-    /**
-     * @var bool|null Marks the default option
-     */
+    /** @var bool|null Marks the default option */
     public $default = null;
 
     /**

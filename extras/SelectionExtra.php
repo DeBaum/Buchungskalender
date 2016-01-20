@@ -2,9 +2,9 @@
 
 namespace extras;
 
+
 use extras\forms\InputFieldType;
 use extras\forms\SelectField;
-
 
 /**
  * Represents a selection.

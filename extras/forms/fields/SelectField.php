@@ -2,6 +2,7 @@
 
 namespace extras\forms;
 
+
 use extras\BaseExtra;
 use extras\SelectOption;
 
@@ -12,14 +13,10 @@ use extras\SelectOption;
  */
 class SelectField extends BaseField
 {
-    /**
-     * @var SelectOption[] Options for this field
-     */
+    /** @var SelectOption[] Options for this field */
     public $values;
 
-    /**
-     * @var bool|null Marks the default option
-     */
+    /** @var bool|null Marks the default option */
     public $default = null;
 
     /**

@@ -2,14 +2,18 @@
 
 namespace Bookings\Routes;
 
+
 use Bookings\GlobalErrors;
 use Slim\Slim;
 use function Bookings\returnSlimError;
 
+/**
+ * Provides general validation methods for routes.
+ *
+ * @package Bookings\Routes
+ */
 class RouteValidations
 {
-
-
     /**
      * Request body should not be empty
      */
@@ -17,10 +21,9 @@ class RouteValidations
 
     /**
      * Checks if the user is logged in and has
-     * the required roles
+     * the required roles.
      *
      * @param string $role
-     *
      * @return \Closure
      */
     public static function hasRole($role = 'user')

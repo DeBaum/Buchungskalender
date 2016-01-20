@@ -2,11 +2,11 @@
 
 namespace extras;
 
+
 include_once __DIR__ . '/forms/fields/CheckboxField.php';
 
 use extras\forms\CheckboxField;
 use extras\forms\InputFieldType;
-
 
 /**
  * Represents a true/false option.
@@ -31,6 +31,10 @@ class FlagExtra extends BaseExtra
     }
 
     /**
+     * Creates this extra from db configuration
+     *
+     * @see E
+     *
      * @param int $id Extra identifier
      * @param string $title Extra title
      * @param int $typeId ExtraType identifier

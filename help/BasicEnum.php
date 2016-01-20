@@ -2,8 +2,15 @@
 
 namespace help;
 
+
 use ReflectionClass;
 
+/**
+ * Basic enum class that provides general methods
+ * known from other languages like Java
+ *
+ * @package help
+ */
 abstract class BasicEnum
 {
     private static $constCacheArray = NULL;

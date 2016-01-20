@@ -3,6 +3,11 @@
 namespace help;
 
 
+/**
+ * General helper methods for this project.
+ *
+ * @package help
+ */
 class BookingsHelper
 {
     public static function isInt($value, $min = 1)

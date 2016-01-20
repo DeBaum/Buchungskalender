@@ -3,7 +3,6 @@
 namespace Bookings\Controller;
 
 
-use api\models\ReservationExtra;
 use Bookings\GlobalErrors;
 use Bookings\Models\Reservation;
 use function Bookings\returnResult;
@@ -39,7 +38,7 @@ class ReservationController extends BaseController
             return returnSlimError(GlobalErrors::$INVALID_REQUEST, "quantity exceeded (" . ($reservedQuantity + $reservation->quantity) . "/" . $maxQuantity . ")", null);
         }
 
-        $this->validateExtras($reservation->extras);
+        $this->validateExtras($reservation);
 
         $this->startTransaction();
         $inserted_id = $this->insert(
@@ -169,7 +168,7 @@ class ReservationController extends BaseController
             return returnSlimError(GlobalErrors::$INVALID_REQUEST, "quantity exceeded (" . ($reservedQuantity + $reservation->quantity) . "/" . $maxQuantity . ")", null);
         }
 
-        $this->validateExtras($reservation->extras);
+        $this->validateExtras($reservation);
 
         $this->startTransaction();
         $rows = $this->updateAll(
@@ -201,11 +200,16 @@ class ReservationController extends BaseController
     /**
      * Validates a list of Extras.
      *
-     * @param ReservationExtra[] $extras List of ReservationExtras
+     * @param Reservation $reservation
      * @return bool If the list of Extras is valid.
      */
-    private function validateExtras($extras)
+    private function validateExtras(Reservation $reservation)
     {
+        // empty/null values stand for "not set" so remove them
+        $reservation->extras = array_filter($reservation->extras, function ($extra) {
+            $val = $extra->value;
+            return $val !== null && (!is_numeric($val) || intval($val) > 0);
+        });
         // TODO Validation
         return true;
     }

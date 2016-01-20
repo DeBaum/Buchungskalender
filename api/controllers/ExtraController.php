@@ -86,6 +86,7 @@ class ExtraController extends BaseController
     {
         $extras = $reservaton->extras;
         $existingExtras = $oldReservation !== null ? $oldReservation->extras : [];
+
         /** @var ReservationExtra[] $extrasToUpdate */
         $extrasToUpdate = [];
         /** @var ReservationExtra[] $extrasToInsert */

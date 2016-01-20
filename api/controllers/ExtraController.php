@@ -84,8 +84,16 @@ class ExtraController extends BaseController
      */
     public function syncReservationExtras(Reservation $reservaton, Reservation $oldReservation = null)
     {
+        // empty/null values stand for "not set" so remove them
+        $reservaton->extras = array_filter($reservaton->extras, function ($extra) {
+            $val = $extra->value;
+            return $val !== null && (!is_numeric($val) || intval($val) > 0);
+        });
+
+
         $extras = $reservaton->extras;
         $existingExtras = $oldReservation !== null ? $oldReservation->extras : [];
+
         /** @var ReservationExtra[] $extrasToUpdate */
         $extrasToUpdate = [];
         /** @var ReservationExtra[] $extrasToInsert */

@@ -22,9 +22,6 @@ class ReservationExtra extends BaseModel
         if (!$this->isInt($extraId, 1)) {
             throw new \InvalidArgumentException("ReservationExtra is missing extra_id");
         }
-        if (!$this->isString($value, 1)) {
-            throw new \InvalidArgumentException("ReservationExtra is missing value");
-        }
         $this->extra_id = $extraId;
         $this->value = $value;
     }
